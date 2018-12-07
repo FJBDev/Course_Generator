@@ -23,27 +23,26 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
+import org.cef.CefApp;
+import org.cef.CefClient;
+import org.cef.browser.CefBrowser;
+import org.cef.callback.CefAuthCallback;
+import org.cef.callback.CefRequestCallback;
+import org.cef.handler.CefLoadHandler.ErrorCode;
+import org.cef.handler.CefRequestHandler;
+import org.cef.handler.CefResourceHandler;
+import org.cef.misc.BoolRef;
+import org.cef.misc.StringRef;
+import org.cef.network.CefRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
-import javafx.concurrent.Worker.State;
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebView;
 
 /**
  * A class that generates a GUI panel for the weather data.
@@ -62,8 +61,9 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private JLabel InformationWarning;
 	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
-	private WebView webView;
 	private String weatherDataSheetContent;
+
+	private CefBrowser browser;
 
 	public static final String EVENT_TYPE_CLICK = "click";
 	public static final String EVENT_TYPE_MOUSEOVER = "mouseover";
@@ -88,49 +88,96 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		UpdatePanel();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
-		final JFXPanel fxPanel = new JFXPanel();
+		final CefApp cefApp = CefApp.getInstance();
+		CefClient client = cefApp.createClient();
 
-		// Creation of scene and future interactions with JFXPanel
-		// should take place on the JavaFX Application Thread
-		Platform.runLater(() -> {
-			webView = new WebView();
-			fxPanel.setScene(new Scene(webView));
-
-			webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
-				public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
-					if (newState == Worker.State.SUCCEEDED) {
-						EventListener listener = new EventListener() {
-							@Override
-							public void handleEvent(Event ev) {
-								String domEventType = ev.getType();
-								if (domEventType.equals(EVENT_TYPE_CLICK)) {
-									String href = ((Element) ev.getTarget()).getAttribute("href");
-									if (Desktop.isDesktopSupported()) {
-										new Thread(() -> {
-											try {
-												Desktop.getDesktop().browse(new URI(href));
-											} catch (IOException | URISyntaxException e1) {
-												e1.printStackTrace();
-											}
-										}).start();
-									}
-									ev.preventDefault();
-								}
-							}
-						};
-
-						org.w3c.dom.Document doc = webView.getEngine().getDocument();
-						NodeList nodeList = doc.getElementsByTagName("a");
-						for (int i = 0; i < nodeList.getLength(); i++) {
-							((EventTarget) nodeList.item(i)).addEventListener(EVENT_TYPE_CLICK, listener, false);
-
-						}
+		client.addRequestHandler(new CefRequestHandler() {
+			@Override
+			public boolean onBeforeBrowse(CefBrowser browser, CefRequest request, boolean is_redirect) {
+				if (Desktop.isDesktopSupported()) {
+					try {
+						Desktop.getDesktop().browse(new URI(request.getURL()));
+					} catch (IOException | URISyntaxException e) {
+						CgLog.info("JPanelWeather : Error when loading the URL : " + request.getURL() + ".");
+						e.printStackTrace();
 					}
 				}
-			});
+				// We return true so that the current browser doesn't change
+				// as we're opening the link in the user's default browser.
+				return true;
+			}
 
+
+			@Override
+			public CefResourceHandler getResourceHandler(CefBrowser browser, CefRequest request) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+
+			@Override
+			public boolean getAuthCredentials(CefBrowser browser, boolean isProxy, String host, int port, String realm,
+					String scheme, CefAuthCallback callback) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+
+			@Override
+			public boolean onQuotaRequest(CefBrowser browser, String origin_url, long new_size,
+					CefRequestCallback callback) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+
+			@Override
+			public void onProtocolExecution(CefBrowser browser, String url, BoolRef allow_os_execution) {
+				// TODO Auto-generated method stub
+			}
+
+
+			@Override
+			public boolean onCertificateError(CefBrowser browser, ErrorCode cert_error, String request_url,
+					CefRequestCallback callback) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+
+			@Override
+			public void onPluginCrashed(CefBrowser browser, String pluginPath) {
+				// TODO Auto-generated method stub
+
+			}
+
+
+			@Override
+			public void onRenderProcessTerminated(CefBrowser browser, TerminationStatus status) {
+				// TODO Auto-generated method stub
+
+			}
+
+
+			@Override
+			public boolean onBeforeResourceLoad(CefBrowser browser, CefRequest request) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+
+			@Override
+			public void onResourceRedirect(CefBrowser browser, CefRequest request, StringRef new_url) {
+				// TODO Auto-generated method stub
+
+			}
 		});
-		add(fxPanel, java.awt.BorderLayout.CENTER);
+
+		browser = client.createBrowser("about:blank", true, false);
+		Component browserUI = browser.getUIComponent();
+
+		// Create a new frame for holding the browser ui
+		add(browserUI, java.awt.BorderLayout.CENTER);
 	}
 
 
@@ -292,9 +339,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 */
 	private void updateDataSheet(String dataSheetContent) {
 		weatherDataSheetContent = dataSheetContent;
-		Platform.runLater(() -> {
-			webView.getEngine().loadContent(weatherDataSheetContent);
-		});
+		browser.loadURL("data:text/html," + dataSheetContent);
 	}
 
 
@@ -562,8 +607,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		if (temperatureValue == null || temperatureValue.equals("")) //$NON-NLS-1$
 			return ""; //$NON-NLS-1$
 
-		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
+		String temperatureWithUnit = Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
 				+ Utils.uTemperatureToString(settings.Unit);
+		temperatureWithUnit = temperatureWithUnit.replace("°", "&deg;");
+
+		return temperatureWithUnit;
 	}
 
 
@@ -626,14 +674,14 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				if (noaaSummariesWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
 							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
-									+ noaaSummariesWeatherStation.getId() + "/detail;");
+									+ noaaSummariesWeatherStation.getId() + "/detail");
 				}
 				break;
 			case "normalsWeatherStation": //$NON-NLS-1$
 				if (noaaNormalsWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
 							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
-									+ noaaNormalsWeatherStation.getId() + "/detail;");
+									+ noaaNormalsWeatherStation.getId() + "/detail");
 				}
 				break;
 			}

@@ -100,5 +100,11 @@ mvn versions:display-dependency-updates -->
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.7</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bitbucket.johness/java-cef -->
+<dependency>
+    <groupId>org.bitbucket.johness</groupId>
+    <artifactId>java-cef</artifactId>
+    <version>49.87.win64.2</version>
+</dependency>
 	</dependencies>
 </project>
