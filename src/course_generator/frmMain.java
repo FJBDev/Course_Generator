@@ -2852,10 +2852,10 @@ public class frmMain extends javax.swing.JFrame {
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 		
 		// -- Tab - Weather
-				// ---------------------------------------------------
-				panelWeather = new JPanelWeather(Settings, this);
-				addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
-						Utils.getIcon(this, "weather.png", Settings.TabIconSize));
+		// ---------------------------------------------------
+		panelWeather = new JPanelWeather(Settings, this);
+		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
+				Utils.getIcon(this, "weather.png", Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------

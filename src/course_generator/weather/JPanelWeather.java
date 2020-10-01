@@ -46,6 +46,9 @@ import javafx.scene.web.WebView;
 /**
  * A class that generates a GUI panel for the weather data.
  * 
+ * In order to have this class compile, I havse used this procedure:
+ * https://www.javatpoint.com/javafx-with-eclipse
+ * 
  * @author Frederic Bard
  */
 
