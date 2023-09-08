@@ -25,6 +25,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class ParamPointsModel extends AbstractTableModel {
+
 	private static final long serialVersionUID = -972678605120520023L;
 	private java.util.ResourceBundle bundle;
 	private ParamData param;
@@ -39,9 +40,11 @@ public class ParamPointsModel extends AbstractTableModel {
 		param = p;
 		this.settings = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-		header = new String[2];
+		header = new String[3];
 		header[0] = bundle.getString("ParamPointsModel.slope");
 		header[1] = bundle.getString("ParamPointsModel.speed");
+		header[2] ="FC";// bundle.getString("ParamPointsModel.speed");
+		//todo fb ca se passe ici
 	}
 
 	public void setParam(ParamData p) {
@@ -82,6 +85,10 @@ public class ParamPointsModel extends AbstractTableModel {
 			else
 				return param.data.get(rowIndex).getSpeedNumber();
 
+		case 2:
+			// Heart rate
+				return param.data.get(rowIndex).getHeartRate();
+
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -92,6 +99,7 @@ public class ParamPointsModel extends AbstractTableModel {
 		switch (columnIndex) {
 		case 0:
 		case 1:
+		case 2:
 			return Double.class;
 		default:
 			return Object.class;

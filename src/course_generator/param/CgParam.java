@@ -25,8 +25,10 @@ import course_generator.utils.Utils;
  * @author pierre.delore
  */
 public class CgParam implements Comparable<CgParam> {
+
 	private double Slope;
 	private String Speed;
+	private double HeartRate;
 
 	public CgParam(double slope, String speed) {
 		Slope = slope;
@@ -69,6 +71,14 @@ public class CgParam implements Comparable<CgParam> {
 
 	public void setSpeed(double speed) {
 		Speed = String.valueOf(speed);
+	}
+
+	public double getHeartRate() {
+		return HeartRate;
+	}
+
+	public void setHeartRate(double heartRate) {
+		HeartRate = heartRate;
 	}
 
 }
