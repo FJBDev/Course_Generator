@@ -66,6 +66,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 	}
 
 	private void initComponents() {
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditPoint.title"));
 		setAlwaysOnTop(true);
@@ -73,6 +74,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		setType(java.awt.Window.Type.UTILITY);
 
 		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
 			public void componentShown(java.awt.event.ComponentEvent evt) {
 				formComponentShown(evt);
 			}
@@ -85,7 +87,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		// -- Slope
 		lbSlope = new javax.swing.JLabel();
-		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text") + " ");
+		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text") + " dewded");
 		Utils.addComponent(paneGlobal, lbSlope, 0, 0, 1, 1, 0, 0, 10, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 

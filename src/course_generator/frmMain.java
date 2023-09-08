@@ -1181,20 +1181,17 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInvertTrack = new javax.swing.JMenuItem();
 		mnuInvertTrack.setIcon(Utils.getIcon(this, "inverse.png", Settings.MenuIconSize));
 		mnuInvertTrack.setEnabled(false);
-		mnuInvertTrack.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.size() > 0) {
-					BackupInCGX();
-					Track.Invert();
-					panelProfil.RefreshProfilChart();
-					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelSpeed.Refresh(Track, Settings);
-					jPanelSpeedSlope.Refresh(Track, Settings);
-					RefreshStatusbar(Track);
-					panelTrackData.refresh();
-					PanelResume.refresh();
-				}
+		mnuInvertTrack.addActionListener(actionEvent -> {
+			if (Track.data.size() > 0) {
+				BackupInCGX();
+				Track.Invert();
+				panelProfil.RefreshProfilChart();
+				jPanelTimeDist.Refresh(Track, Settings);
+				jPanelSpeed.Refresh(Track, Settings);
+				jPanelSpeedSlope.Refresh(Track, Settings);
+				RefreshStatusbar(Track);
+				panelTrackData.refresh();
+				PanelResume.refresh();
 			}
 		});
 		mnuTools.add(mnuInvertTrack);
@@ -1204,12 +1201,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart = new javax.swing.JMenuItem();
 		mnuDefineNewStart.setIcon(Utils.getIcon(this, "flag_new.png", Settings.MenuIconSize));
 		mnuDefineNewStart.setEnabled(false);
-		mnuDefineNewStart.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				NewStartPoint();
-			}
-		});
+		mnuDefineNewStart.addActionListener(actionEvent -> NewStartPoint());
 		mnuTools.add(mnuDefineNewStart);
 
 		// -- Smooth the elevation values
@@ -1217,12 +1209,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSmoothElevation = new javax.swing.JMenuItem();
 		mnuSmoothElevation.setIcon(Utils.getIcon(this, "elev_smoothing.png", Settings.MenuIconSize));
 		mnuSmoothElevation.setEnabled(false);
-		mnuSmoothElevation.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SmoothElevation();
-			}
-		});
+		mnuSmoothElevation.addActionListener(actionEvent -> SmoothElevation());
 		mnuTools.add(mnuSmoothElevation);
 
 		// -- Calculate the track time
@@ -1231,12 +1218,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCalculateTrackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
 		mnuCalculateTrackTime.setIcon(Utils.getIcon(this, "refresh.png", Settings.MenuIconSize));
 		mnuCalculateTrackTime.setEnabled(false);
-		mnuCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				CalcTrackTime();
-			}
-		});
+		mnuCalculateTrackTime.addActionListener(actionEvent -> CalcTrackTime());
 		mnuTools.add(mnuCalculateTrackTime);
 
 		// -- Search curve from final time
@@ -1244,12 +1226,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSearchCurveFromFinalTime = new javax.swing.JMenuItem();
 		mnuSearchCurveFromFinalTime.setEnabled(false);
 		mnuSearchCurveFromFinalTime.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
-		mnuSearchCurveFromFinalTime.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SearchCurveFromFinalTime();
-			}
-		});
+		mnuSearchCurveFromFinalTime.addActionListener(actionEvent -> SearchCurveFromFinalTime());
 		mnuTools.add(mnuSearchCurveFromFinalTime);
 
 		// -- Separator
@@ -1259,11 +1236,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Internet tools
 		// ----------------------------------------------------
 		mnuInternetTools = new javax.swing.JMenuItem();
-		mnuInternetTools.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
-			}
+		mnuInternetTools.addActionListener(actionEvent -> {
+			// mnuSaveCGXActionPerformed(evt); //TODO
 		});
 		mnuInternetTools.setEnabled(false);
 		mnuInternetTools.setVisible(false);
@@ -1285,14 +1259,11 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------
 		mnuDisplaySSDir = new javax.swing.JMenuItem();
 		mnuDisplaySSDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
-		mnuDisplaySSDir.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				try {
-					Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/curves"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		mnuDisplaySSDir.addActionListener(actionEvent -> {
+			try {
+				Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/curves"));
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		});
 		mnuTools.add(mnuDisplaySSDir);
@@ -1305,12 +1276,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------
 		mnuDisplayLogDir = new javax.swing.JMenuItem();
 		mnuDisplayLogDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
-		mnuDisplayLogDir.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DisplayLogDir();
-			}
-		});
+		mnuDisplayLogDir.addActionListener(actionEvent -> DisplayLogDir());
 		mnuTools.add(mnuDisplayLogDir);
 
 		// --

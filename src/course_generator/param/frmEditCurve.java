@@ -40,8 +40,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
@@ -65,6 +63,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
+	
 	private static final long serialVersionUID = 1466576207663718609L;
 	private boolean ok;
 	private boolean bEditMode;
@@ -180,6 +179,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @return Return a JFreeChart object
 	 */
 	private JFreeChart CreateChartProfile(XYDataset dataset) {
+		
 		JFreeChart chart = ChartFactory.createXYAreaChart("", bundle.getString("frmEditCurve.chart.slope"), // "Slope" x
 																											// axis
 																											// label
@@ -218,7 +218,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private void RefreshCurveList(String dir) {
 		File[] files = new File(dir).listFiles(new FilenameFilter() {
 			@Override
-			public boolean accept(File dir, String name) {
+			public boolean accept(File file, String name) {
 				return name.toLowerCase().endsWith(".par");
 			}
 		});
@@ -317,23 +317,20 @@ public class frmEditCurve extends javax.swing.JDialog {
 		TablePoints.setModel(tablemodel);// new ParamPointsModel(param));
 		TablePoints.getTableHeader().setReorderingAllowed(false);
 		TablePoints.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
 				// TableMainMouseClicked(evt);
 				// TODO
 			}
 		});
 		TablePoints.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				// TableMainKeyReleased(evt);
 				// TODO
 			}
 		});
-		TablePoints.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent event) {
-				btEditLine.setEnabled(TablePoints.getSelectedRow() > 0);
-			}
-		});
+		TablePoints.getSelectionModel().addListSelectionListener(listSelectionEvent -> btEditLine.setEnabled(TablePoints.getSelectedRow() > 0));
 
 		jScrollPanePoint = new javax.swing.JScrollPane();
 		jScrollPanePoint.setViewportView(TablePoints);
@@ -389,11 +386,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btOk = new javax.swing.JButton();
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
-		btOk.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				RequestToClose();
-			}
-		});
+		btOk.addActionListener(actionEvent -> RequestToClose());
 		Utils.addComponent(paneGlobal, btOk, 0, 5, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 0, 10, 0,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE);
 
@@ -476,22 +469,14 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btAddLine = new javax.swing.JButton();
 		btAddLine.setIcon(Utils.getIcon(this, "add.png", settings.DialogIconSize));
 		btAddLine.setToolTipText(bundle.getString("frmEditCurve.btAddLine.toolTipText"));
-		btAddLine.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AddLine();
-			}
-		});
+		btAddLine.addActionListener(actionEvent -> AddLine());
 		ToolBarEdit.add(btAddLine);
 
 		// -- Delete line
 		btDeleteLine = new javax.swing.JButton();
 		btDeleteLine.setIcon(Utils.getIcon(this, "delete.png", settings.DialogIconSize));
 		btDeleteLine.setToolTipText(bundle.getString("frmEditCurve.btDeleteLine.toolTipText"));
-		btDeleteLine.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteLine();
-			}
-		});
+		btDeleteLine.addActionListener(actionEvent -> DeleteLine());
 		ToolBarEdit.add(btDeleteLine);
 
 		// -- Separator
@@ -501,21 +486,19 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btSaveEdit = new javax.swing.JButton();
 		btSaveEdit.setIcon(Utils.getIcon(this, "save.png", settings.DialogIconSize));
 		btSaveEdit.setToolTipText(bundle.getString("frmEditCurve.btSaveEdit.toolTipText"));
-		btSaveEdit.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (bEditMode) {
-					param.comment = tfComment.getText();
-					param.name = lbNameVal.getText();
-					// param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile +
-					// ".par", settings.Unit);
-					param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + Paramfile + ".par",
-							settings.Unit);
+		btSaveEdit.addActionListener(actionEvent -> {
+			if (bEditMode) {
+				param.comment = tfComment.getText();
+				param.name = lbNameVal.getText();
+				// param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile +
+				// ".par", settings.Unit);
+				param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + Paramfile + ".par",
+						settings.Unit);
 
-					bEditMode = false;
-					ChangeEditStatus();
-					RefreshView();
-					RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
-				}
+				bEditMode = false;
+				ChangeEditStatus();
+				RefreshView();
+				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 			}
 		});
 		ToolBarEdit.add(btSaveEdit);
@@ -524,16 +507,14 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btCancelEdit = new javax.swing.JButton();
 		btCancelEdit.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancelEdit.setToolTipText(bundle.getString("frmEditCurve.btCancelEdit.toolTipText"));
-		btCancelEdit.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (bEditMode) {
-					bEditMode = false;
-					Paramfile = Old_Paramfile;
-					LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + Paramfile + ".par",
-							settings.SelectedCurveFolder);
-					ChangeEditStatus();
-					RefreshView();
-				}
+		btCancelEdit.addActionListener(actionEvent -> {
+			if (bEditMode) {
+				bEditMode = false;
+				Paramfile = Old_Paramfile;
+				LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + Paramfile + ".par",
+						settings.SelectedCurveFolder);
+				ChangeEditStatus();
+				RefreshView();
 			}
 		});
 		ToolBarEdit.add(btCancelEdit);
@@ -550,36 +531,30 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// -- km/h
 		btKM_H = new javax.swing.JToggleButton();
 		btKM_H.setText("km/h");
-		btKM_H.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H;
-				UpdateSelBtStatus();
-				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
-			}
+		btKM_H.addActionListener(actionEvent -> {
+			settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H;
+			UpdateSelBtStatus();
+			RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 		});
 		ToolBarSel.add(btKM_H);
 
 		// -- min/miles
 		btMin_Miles = new javax.swing.JToggleButton();
 		btMin_Miles.setText("min/miles");
-		btMin_Miles.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_MIN_MILES;
-				UpdateSelBtStatus();
-				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
-			}
+		btMin_Miles.addActionListener(actionEvent -> {
+			settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_MIN_MILES;
+			UpdateSelBtStatus();
+			RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 		});
 		ToolBarSel.add(btMin_Miles);
 
 		// -- user define
 		btUser_Def = new javax.swing.JToggleButton();
 		btUser_Def.setText("user");
-		btUser_Def.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_USER;
-				UpdateSelBtStatus();
-				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
-			}
+		btUser_Def.addActionListener(actionEvent -> {
+			settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_USER;
+			UpdateSelBtStatus();
+			RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 		});
 		ToolBarSel.add(btUser_Def);
 
@@ -614,7 +589,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	}
 
 	private void RefreshChart() {
-		if (param.data.size() <= 0)
+		if (param.data.isEmpty())
 			return;
 
 		if (dataset.getSeriesCount() > 0)
@@ -707,55 +682,35 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btLoadCurve = new javax.swing.JButton();
 		btLoadCurve.setIcon(Utils.getIcon(this, "chart_curve_open.png", settings.CurveButtonsIconSize));
 		btLoadCurve.setToolTipText(bundle.getString("frmEditCurve.btLoadCurve.toolTipText"));
-		btLoadCurve.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SelectCurve();
-			}
-		});
+		btLoadCurve.addActionListener(actionEvent -> SelectCurve());
 		ToolBarAction.add(btLoadCurve);
 
 		// -- Edit curve
 		btEditCurve = new javax.swing.JButton();
 		btEditCurve.setIcon(Utils.getIcon(this, "chart_curve_edit.png", settings.CurveButtonsIconSize));
 		btEditCurve.setToolTipText(bundle.getString("frmEditCurve.btEditCurve.toolTipText"));
-		btEditCurve.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				EditCurve();
-			}
-		});
+		btEditCurve.addActionListener(actionEvent -> EditCurve());
 		ToolBarAction.add(btEditCurve);
 
 		// -- Add curve
 		btAddCurve = new javax.swing.JButton();
 		btAddCurve.setIcon(Utils.getIcon(this, "chart_curve_add.png", settings.CurveButtonsIconSize));
 		btAddCurve.setToolTipText(bundle.getString("frmEditCurve.btAddCurve.toolTipText"));
-		btAddCurve.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AddCurve();
-			}
-		});
+		btAddCurve.addActionListener(actionEvent -> AddCurve());
 		ToolBarAction.add(btAddCurve);
 
 		// -- Duplicate curve
 		btDuplicateCurve = new javax.swing.JButton();
 		btDuplicateCurve.setIcon(Utils.getIcon(this, "chart_curve_duplicate.png", settings.CurveButtonsIconSize));
 		btDuplicateCurve.setToolTipText(bundle.getString("frmEditCurve.btDuplicateCurve.toolTipText"));
-		btDuplicateCurve.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DuplicateCurve();
-			}
-		});
+		btDuplicateCurve.addActionListener(actionEvent -> DuplicateCurve());
 		ToolBarAction.add(btDuplicateCurve);
 
 		// -- Delete curve
 		btDeleteCurve = new javax.swing.JButton();
 		btDeleteCurve.setIcon(Utils.getIcon(this, "chart_curve_delete.png", settings.CurveButtonsIconSize));
 		btDeleteCurve.setToolTipText(bundle.getString("frmEditCurve.btDeleteCurve.toolTipText"));
-		btDeleteCurve.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteCurve();
-			}
-		});
+		btDeleteCurve.addActionListener(actionEvent -> DeleteCurve());
 		ToolBarAction.add(btDeleteCurve);
 	}
 
