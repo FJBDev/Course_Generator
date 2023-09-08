@@ -87,7 +87,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		// -- Slope
 		lbSlope = new javax.swing.JLabel();
-		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text") + " dewded");
+		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text") + " ");
 		Utils.addComponent(paneGlobal, lbSlope, 0, 0, 1, 1, 0, 0, 10, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
