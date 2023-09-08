@@ -4,7 +4,7 @@
  *
  * Contributor(s) :
  * Frederic
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,12 +21,12 @@
 
 /*
  * Settings for the development :
- * - In order to have the log message in the eclipse console set in the 
- * run configuration "-DrunInEclipse=true" in Arguments/VM argument 
- * otherwise the message go to a log file 
- * - Under Linux add "-Dgnu.java.awt.peer.gtk.Graphics=Graphics2D -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"  in Arguments/VM argument 
+ * - In order to have the log message in the eclipse console set in the
+ * run configuration "-DrunInEclipse=true" in Arguments/VM argument
+ * otherwise the message go to a log file
+ * - Under Linux add "-Dgnu.java.awt.peer.gtk.Graphics=Graphics2D -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"  in Arguments/VM argument
  * This will allow to have the anti aliasing for the font.
- *  
+ *
   * Used libraries:
  *  - Commons-Suncalc - Apache License 2.0 - https://shredzone.org/maven/commons-suncalc/index.html
  *  - jcommon - LGPL - http://www.jfree.org/jcommon/
@@ -35,8 +35,8 @@
  *  - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2
   *  - SwingX - LGPL 2.1 - https://swingx.java.net/
  *  - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape
- *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
- *  
+ *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/
+ *
  * Copyrights:
  * Maps :
  * - Openstreetmap : http://www.openstreetmap.org/
@@ -55,11 +55,11 @@
  * - Statistic: Add the highest ascend and descend
  * - Analyze : bar chart speed/km or miles
  * - Analyze : Click in charts sometime doesn't works. Probably due to "find the nearest point" function
- * - Crosshair on curve editor => it select the line on the grid 
- * 
+ * - Crosshair on curve editor => it select the line on the grid
+ *
  * Notes:
  * Ctrl+C shortcut doesn't work because it probably managed directly by the JTable. Currently there is no shortcut.
- * 
+ *
  */
 
 package course_generator;
@@ -302,6 +302,7 @@ public class frmMain extends javax.swing.JFrame {
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			cmptInternetConnexion++;
 			if (cmptInternetConnexion > Settings.ConnectionTimeout) {
@@ -328,9 +329,9 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Creates new form frmMain !!!! Everything start here !!!!
+	 * Creates new form frmMain !!!! Everything starts here !!!!
 	 */
-	public frmMain(String[] args) {
+	public frmMain() {
 		// -- Get the current time to measure the initialization time
 		long ts = System.currentTimeMillis();
 
@@ -443,11 +444,11 @@ public class frmMain extends javax.swing.JFrame {
 
 		/*
 		 * if (Settings.DefaultFontName.isEmpty()) Settings.DefaultFontName="Arial";
-		 * 
+		 *
 		 * //setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 14));
 		 * setUIFont(new javax.swing.plaf.FontUIResource(Settings.DefaultFontName,
 		 * Settings.DefaultFontStyle, Settings.DefaultFontSize));
-		 * 
+		 *
 		 * CgLog.info("Default font: "+javax.swing.UIManager.getDefaults().getFont(
 		 * "TabbedPane.font").toString());
 		 */
@@ -542,11 +543,8 @@ public class frmMain extends javax.swing.JFrame {
 	 * Launch the calculation on the track
 	 */
 	private void CalcTrackTime() {
-		if (Track.data.isEmpty())
-			return;
-
 		// -- Read only? Exit
-		if (Track.ReadOnly)
+		if (Track.data.isEmpty() || Track.ReadOnly)
 			return;
 
 		// -- Calculation
@@ -600,6 +598,7 @@ public class frmMain extends javax.swing.JFrame {
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
 		mnuOpenCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.MenuIconSize));
 		mnuOpenCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				OpenCGXDialog();
 			}
@@ -614,6 +613,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru CGX n°1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruCGXActionPerformed(evt);
 			}
@@ -623,6 +623,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru CGX n°2
 		mnuMruCGX2 = new javax.swing.JMenuItem();
 		mnuMruCGX2.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruCGXActionPerformed(evt);
 			}
@@ -632,6 +633,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru CGX n°3
 		mnuMruCGX3 = new javax.swing.JMenuItem();
 		mnuMruCGX3.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruCGXActionPerformed(evt);
 			}
@@ -641,6 +643,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru CGX n°4
 		mnuMruCGX4 = new javax.swing.JMenuItem();
 		mnuMruCGX4.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruCGXActionPerformed(evt);
 			}
@@ -650,6 +653,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru CGX n°5
 		mnuMruCGX5 = new javax.swing.JMenuItem();
 		mnuMruCGX5.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruCGXActionPerformed(evt);
 			}
@@ -665,6 +669,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
 		mnuSaveCGX.setEnabled(false);
 		mnuSaveCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveCGX();
 			}
@@ -676,6 +681,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveAsCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
 		mnuSaveAsCGX.setEnabled(false);
 		mnuSaveAsCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveAsCGX();
 			}
@@ -695,6 +701,7 @@ public class frmMain extends javax.swing.JFrame {
 				java.awt.event.InputEvent.CTRL_MASK | java.awt.event.InputEvent.SHIFT_MASK));
 		mnuOpenGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
 		mnuOpenGPX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				OpenGPXDialog();
 			}
@@ -709,6 +716,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru GPX n°1
 		mnuMruGPX1 = new javax.swing.JMenuItem();
 		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruGPXActionPerformed(evt);
 			}
@@ -718,6 +726,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru GPX n°2
 		mnuMruGPX2 = new javax.swing.JMenuItem();
 		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruGPXActionPerformed(evt);
 			}
@@ -727,6 +736,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru GPX n°3
 		mnuMruGPX3 = new javax.swing.JMenuItem();
 		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruGPXActionPerformed(evt);
 			}
@@ -736,6 +746,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru GPX n°4
 		mnuMruGPX4 = new javax.swing.JMenuItem();
 		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruGPXActionPerformed(evt);
 			}
@@ -745,6 +756,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mru GPX n°5
 		mnuMruGPX5 = new javax.swing.JMenuItem();
 		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuMruGPXActionPerformed(evt);
 			}
@@ -769,6 +781,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportGPX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportGPX.setEnabled(false);
 		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ImportGPX();
 			}
@@ -780,6 +793,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportCGX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportCGX.setEnabled(false);
 		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ImportCGX();
 			}
@@ -804,6 +818,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCSV.setIcon(Utils.getIcon(this, "save_csv.png", Settings.MenuIconSize));
 		mnuSaveCSV.setEnabled(false);
 		mnuSaveCSV.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveCSV();
 			}
@@ -815,6 +830,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveGPX.setIcon(Utils.getIcon(this, "save_gpx.png", Settings.MenuIconSize));
 		mnuSaveGPX.setEnabled(false);
 		mnuSaveGPX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveAsGPX();
 			}
@@ -826,6 +842,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
 		mnuSavePartCGX.setEnabled(false);
 		mnuSavePartCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SavePartCGX();
 			}
@@ -837,6 +854,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartGPX.setIcon(Utils.getIcon(this, "save_gpx.png", Settings.MenuIconSize));
 		mnuSavePartGPX.setEnabled(false);
 		mnuSavePartGPX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SavePartGPX();
 			}
@@ -867,6 +885,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportPoints.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportPoints.setEnabled(false);
 		mnuImportPoints.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
 				ImportPoints();
@@ -879,6 +898,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportPoints.setIcon(Utils.getIcon(this, "export.png", Settings.MenuIconSize));
 		mnuExportPoints.setEnabled(false);
 		mnuExportPoints.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ExportPoints();
 			}
@@ -893,6 +913,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportTagAsWaypoints.setIcon(Utils.getIcon(this, "export.png", Settings.MenuIconSize));
 		mnuExportTagAsWaypoints.setEnabled(false);
 		mnuExportTagAsWaypoints.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ExportTagsAsWaypoints();
 			}
@@ -912,6 +933,7 @@ public class frmMain extends javax.swing.JFrame {
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
 		mnuQuit.setIcon(Utils.getIcon(this, "quit.png", Settings.MenuIconSize));
 		mnuQuit.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuQuitActionPerformed(evt);
 			}
@@ -932,6 +954,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCopy.setIcon(Utils.getIcon(this, "copy.png", Settings.MenuIconSize));
 		mnuCopy.setEnabled(false);
 		mnuCopy.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				panelTrackData.Copy2Clipboard();
 			}
@@ -948,6 +971,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSearchPoint.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
 		mnuSearchPoint.setEnabled(false);
 		mnuSearchPoint.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SearchPointDialog();
 			}
@@ -961,6 +985,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSearchDistance.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
 		mnuSearchDistance.setEnabled(false);
 		mnuSearchDistance.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SearchDistanceDialog();
 			}
@@ -974,6 +999,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuReadOnly = new javax.swing.JCheckBoxMenuItem();
 		mnuReadOnly.setEnabled(false);
 		mnuReadOnly.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ReadOnly();
 			}
@@ -989,6 +1015,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuMarkPosition.setIcon(Utils.getIcon(this, "flag.png", Settings.MenuIconSize));
 		mnuMarkPosition.setEnabled(false);
 		mnuMarkPosition.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SetMapMarker();
 			}
@@ -1001,6 +1028,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGotoNextMark.setIcon(Utils.getIcon(this, "next.png", Settings.MenuIconSize));
 		mnuGotoNextMark.setEnabled(false);
 		mnuGotoNextMark.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				GoToNextMark();
 			}
@@ -1014,6 +1042,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGotoPrevMark.setIcon(Utils.getIcon(this, "prev.png", Settings.MenuIconSize));
 		mnuGotoPrevMark.setEnabled(false);
 		mnuGotoPrevMark.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				GoToPreviousMark();
 			}
@@ -1034,6 +1063,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuHTMLReport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
 		mnuHTMLReport.setIcon(Utils.getIcon(this, "html.png", Settings.MenuIconSize));
 		mnuHTMLReport.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// mnuSaveCGXActionPerformed(evt); //TODO
 			}
@@ -1051,6 +1081,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGenerateKML = new javax.swing.JMenuItem();
 		mnuGenerateKML.setIcon(Utils.getIcon(this, "world.png", Settings.MenuIconSize));
 		mnuGenerateKML.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// mnuSaveCGXActionPerformed(evt); //TODO
 			}
@@ -1068,6 +1099,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGenerateRoadbook = new javax.swing.JMenuItem();
 		mnuGenerateRoadbook.setIcon(Utils.getIcon(this, "roadbook.png", Settings.MenuIconSize));
 		mnuGenerateRoadbook.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// TODO
 			}
@@ -1083,6 +1115,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGenerateMiniRoadbook.setIcon(Utils.getIcon(this, "roadbook.png", Settings.MenuIconSize));
 		mnuGenerateMiniRoadbook.setEnabled(false);
 		mnuGenerateMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowMRB();
 			}
@@ -1098,6 +1131,7 @@ public class frmMain extends javax.swing.JFrame {
 		// TODO : Probably to remove in the near futur
 		mnuDisplaySpeed = new javax.swing.JMenuItem();
 		mnuDisplaySpeed.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// mnuSaveCGXActionPerformed(evt); //TODO
 			}
@@ -1111,6 +1145,7 @@ public class frmMain extends javax.swing.JFrame {
 		// TODO: Probably to remove in the near futur
 		mnuDisplaySlope = new javax.swing.JMenuItem();
 		mnuDisplaySlope.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// mnuSaveCGXActionPerformed(evt); //TODO
 			}
@@ -1133,6 +1168,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.setIcon(Utils.getIcon(this, "minmax.png", Settings.MenuIconSize));
 		mnuFindMinMax.setEnabled(false);
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
 				Track.CalcMinMaxElevation();
@@ -1146,6 +1182,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInvertTrack.setIcon(Utils.getIcon(this, "inverse.png", Settings.MenuIconSize));
 		mnuInvertTrack.setEnabled(false);
 		mnuInvertTrack.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (Track.data.size() > 0) {
 					BackupInCGX();
@@ -1168,6 +1205,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart.setIcon(Utils.getIcon(this, "flag_new.png", Settings.MenuIconSize));
 		mnuDefineNewStart.setEnabled(false);
 		mnuDefineNewStart.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				NewStartPoint();
 			}
@@ -1180,6 +1218,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSmoothElevation.setIcon(Utils.getIcon(this, "elev_smoothing.png", Settings.MenuIconSize));
 		mnuSmoothElevation.setEnabled(false);
 		mnuSmoothElevation.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SmoothElevation();
 			}
@@ -1193,6 +1232,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCalculateTrackTime.setIcon(Utils.getIcon(this, "refresh.png", Settings.MenuIconSize));
 		mnuCalculateTrackTime.setEnabled(false);
 		mnuCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				CalcTrackTime();
 			}
@@ -1205,6 +1245,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSearchCurveFromFinalTime.setEnabled(false);
 		mnuSearchCurveFromFinalTime.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
 		mnuSearchCurveFromFinalTime.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SearchCurveFromFinalTime();
 			}
@@ -1219,6 +1260,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------------------
 		mnuInternetTools = new javax.swing.JMenuItem();
 		mnuInternetTools.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// mnuSaveCGXActionPerformed(evt); //TODO
 			}
@@ -1234,7 +1276,7 @@ public class frmMain extends javax.swing.JFrame {
 		 * mnuDisplayCopyCurves.addActionListener(new java.awt.event.ActionListener() {
 		 * public void actionPerformed(java.awt.event.ActionEvent evt) {
 		 * ExportCurvesFromResource(true); } }); mnuTools.add(mnuDisplayCopyCurves);
-		 * 
+		 *
 		 * // -- Separator // ---------------------------------------------------------
 		 * mnuTools.add(new javax.swing.JPopupMenu.Separator());
 		 */
@@ -1244,6 +1286,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDisplaySSDir = new javax.swing.JMenuItem();
 		mnuDisplaySSDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
 		mnuDisplaySSDir.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/curves"));
@@ -1263,6 +1306,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDisplayLogDir = new javax.swing.JMenuItem();
 		mnuDisplayLogDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
 		mnuDisplayLogDir.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				DisplayLogDir();
 			}
@@ -1284,6 +1328,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuTrackSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.MenuIconSize));
 		mnuTrackSettings.setEnabled(false);
 		mnuTrackSettings.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				TrackSettings();
 			}
@@ -1295,6 +1340,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSpeedSlopeCurves = new javax.swing.JMenuItem();
 		mnuSpeedSlopeCurves.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.MenuIconSize));
 		mnuSpeedSlopeCurves.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				EditSSCurves();
 			}
@@ -1312,6 +1358,7 @@ public class frmMain extends javax.swing.JFrame {
 				java.awt.event.InputEvent.SHIFT_MASK));
 		mnuCGSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.MenuIconSize));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				frmSettings frm = new frmSettings(Settings);
 				frm.showDialog();
@@ -1334,7 +1381,7 @@ public class frmMain extends javax.swing.JFrame {
 					// -- Change the language
 					Locale.setDefault(loc);
 					JComponent.setDefaultLocale(loc);
-					JFileChooser.setDefaultLocale(loc);
+					JComponent.setDefaultLocale(loc);
 					setVisible(true);
 					bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 					SetText_MenuBarMain();
@@ -1389,6 +1436,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
 		mnuCGHelp.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (!Utils.OpenHelp(Utils.ProgDir, CurrentLanguage)) {
 					CgLog.info("Failed to open help for the default language '" + CurrentLanguage);
@@ -1407,6 +1455,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuReleaseNotes = new javax.swing.JMenuItem();
 		mnuReleaseNotes.setIcon(Utils.getIcon(this, "edit.png", Settings.MenuIconSize));
 		mnuReleaseNotes.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowReleaseNote();
 			}
@@ -1418,6 +1467,7 @@ public class frmMain extends javax.swing.JFrame {
 		menuCGFaq = new javax.swing.JMenuItem();
 		menuCGFaq.setIcon(Utils.getIcon(this, "faq.png", Settings.MenuIconSize));
 		menuCGFaq.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					Desktop.getDesktop().browse(new URI(bundle.getString("frmMain.menuCGFaq.url")));
@@ -1438,6 +1488,7 @@ public class frmMain extends javax.swing.JFrame {
 		menuCGCoursesLibrary.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
 		menuCGCoursesLibrary.setVisible(false); // Hide the menu. Maybe in the future a new web page will be created
 		menuCGCoursesLibrary.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					Desktop.getDesktop().browse(new URI(bundle.getString("frmMain.menuCGCoursesLibrary.url")));
@@ -1453,6 +1504,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCheckUpdate = new javax.swing.JMenuItem();
 		mnuCheckUpdate.setIcon(Utils.getIcon(this, "update.png", Settings.MenuIconSize));
 		mnuCheckUpdate.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Check4Update();
 			}
@@ -1468,6 +1520,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuReward = new javax.swing.JMenuItem();
 		mnuReward.setIcon(Utils.getIcon(this, "pouce.png", Settings.MenuIconSize));
 		mnuReward.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					Desktop.getDesktop().browse(new URI("http://www.techandrun.com/dons/"));
@@ -1483,6 +1536,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGWebsite = new javax.swing.JMenuItem();
 		mnuCGWebsite.setIcon(Utils.getIcon(this, "www.png", Settings.MenuIconSize));
 		mnuCGWebsite.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					Desktop.getDesktop().browse(new URI("http://www.techandrun.com/"));
@@ -1502,6 +1556,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuAbout = new javax.swing.JMenuItem();
 		mnuAbout.setIcon(Utils.getIcon(this, "about.png", Settings.MenuIconSize));
 		mnuAbout.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				mnuAbout();
 			}
@@ -1613,9 +1668,7 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	protected void ImportPoints() {
-		if (Track == null)
-			return;
-		if (Track.data.isEmpty())
+		if ((Track == null) || Track.data.isEmpty())
 			return;
 
 		String s = Utils.LoadDialog(this, Settings.getLastDirectory(), ".cgp", bundle.getString("frmMain.CGPFile"));
@@ -1664,7 +1717,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Open a dialog where you select the number separator
-	 * 
+	 *
 	 * @return 0=dot 1=comma
 	 */
 	private int SelectSeparator() {
@@ -1943,9 +1996,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Open the dialog to search the curve from an estimated final time
 	 */
 	private void SearchCurveFromFinalTime() {
-		if (Track == null)
-			return;
-		if (Track.data.isEmpty())
+		if ((Track == null) || Track.data.isEmpty())
 			return;
 
 		frmSearchCurve frm = new frmSearchCurve(Settings);
@@ -1958,9 +2009,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Open the dialog to smooth the elevation data
 	 */
 	private void SmoothElevation() {
-		if (Track == null)
-			return;
-		if (Track.data.isEmpty())
+		if ((Track == null) || Track.data.isEmpty())
 			return;
 
 		FrmElevationFilter frm = new FrmElevationFilter(Settings);
@@ -1998,7 +2047,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Separator for the status bar
-	 * 
+	 *
 	 * @return Separator object
 	 */
 	static JComponent createStatusbarSeparator() {
@@ -2080,6 +2129,7 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoCurve = new javax.swing.JLabel();
 		LbInfoCurve.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.StatusbarIconSize));
 		LbInfoCurve.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				EditSSCurves();
 			}
@@ -2090,6 +2140,7 @@ public class frmMain extends javax.swing.JFrame {
 		// --------------------------------------------------------
 		LbInfoCurveVal = new javax.swing.JLabel();
 		LbInfoCurveVal.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				EditSSCurves();
 			}
@@ -2106,6 +2157,7 @@ public class frmMain extends javax.swing.JFrame {
 		LbTimeLimit.setBackground(Color.RED);
 		LbTimeLimit.setForeground(Color.WHITE);
 		LbTimeLimit.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				JumpToTimelimitLine();
 			}
@@ -2229,11 +2281,7 @@ public class frmMain extends javax.swing.JFrame {
 		btOpenGPX = new javax.swing.JButton();
 		btOpenGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.ToolbarIconSize));
 		btOpenGPX.setFocusable(false);
-		btOpenGPX.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				OpenGPXDialog();
-			}
-		});
+		btOpenGPX.addActionListener(actionEvent -> OpenGPXDialog());
 		ToolBarMain.add(btOpenGPX);
 
 		// -- Open CGX
@@ -2242,6 +2290,7 @@ public class frmMain extends javax.swing.JFrame {
 		btOpenCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.ToolbarIconSize));
 		btOpenCGX.setFocusable(false);
 		btOpenCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				OpenCGXDialog();
 			}
@@ -2259,6 +2308,7 @@ public class frmMain extends javax.swing.JFrame {
 		btSaveCGX.setFocusable(false);
 		btSaveCGX.setEnabled(false);
 		btSaveCGX.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveAsCGX();
 			}
@@ -2275,11 +2325,7 @@ public class frmMain extends javax.swing.JFrame {
 		btUndo.setIcon(Utils.getIcon(this, "undo.png", Settings.ToolbarIconSize));
 		btUndo.setFocusable(false);
 		btUndo.setEnabled(false);
-		btUndo.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				RestoreInCGX();
-			}
-		});
+		btUndo.addActionListener(actionEvent -> RestoreInCGX());
 		ToolBarMain.add(btUndo);
 
 		// -- Separator
@@ -2292,11 +2338,7 @@ public class frmMain extends javax.swing.JFrame {
 		btSearch.setIcon(Utils.getIcon(this, "search.png", Settings.ToolbarIconSize));
 		btSearch.setFocusable(false);
 		btSearch.setEnabled(false);
-		btSearch.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SearchDistanceDialog();
-			}
-		});
+		btSearch.addActionListener(actionEvent -> SearchDistanceDialog());
 		ToolBarMain.add(btSearch);
 
 		// -- Previous mark
@@ -2305,12 +2347,10 @@ public class frmMain extends javax.swing.JFrame {
 		btGotoPreviousMark.setIcon(Utils.getIcon(this, "prev.png", Settings.ToolbarIconSize));
 		btGotoPreviousMark.setFocusable(false);
 		btGotoPreviousMark.setEnabled(false);
-		btGotoPreviousMark.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				int p = GoToPreviousMark();
-				if ((p >= 0) && (p < Track.data.size())) {
-					panelMap.RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
-				}
+		btGotoPreviousMark.addActionListener(actionEvent -> {
+			int p = GoToPreviousMark();
+			if ((p >= 0) && (p < Track.data.size())) {
+				panelMap.RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
 			}
 		});
 		ToolBarMain.add(btGotoPreviousMark);
@@ -2322,6 +2362,7 @@ public class frmMain extends javax.swing.JFrame {
 		btGotoNextMark.setFocusable(false);
 		btGotoNextMark.setEnabled(false);
 		btGotoNextMark.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				int p = GoToNextMark();
 				if ((p >= 0) && (p < Track.data.size())) {
@@ -2342,6 +2383,7 @@ public class frmMain extends javax.swing.JFrame {
 		btMiniRoadbook.setFocusable(false);
 		btMiniRoadbook.setEnabled(false);
 		btMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowMRB();
 			}
@@ -2353,11 +2395,7 @@ public class frmMain extends javax.swing.JFrame {
 		btDisplaySSCurves = new javax.swing.JButton();
 		btDisplaySSCurves.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.ToolbarIconSize));
 		btDisplaySSCurves.setFocusable(false);
-		btDisplaySSCurves.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				EditSSCurves();
-			}
-		});
+		btDisplaySSCurves.addActionListener(actionEvent -> EditSSCurves());
 		ToolBarMain.add(btDisplaySSCurves);
 
 		// -- Track settings
@@ -2366,11 +2404,7 @@ public class frmMain extends javax.swing.JFrame {
 		btTrackSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.ToolbarIconSize));
 		btTrackSettings.setFocusable(false);
 		btTrackSettings.setEnabled(false);
-		btTrackSettings.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TrackSettings();
-			}
-		});
+		btTrackSettings.addActionListener(actionEvent -> TrackSettings());
 		ToolBarMain.add(btTrackSettings);
 
 		// -- Separator
@@ -2383,33 +2417,31 @@ public class frmMain extends javax.swing.JFrame {
 		btFillDiff.setIcon(Utils.getIcon(this, "fill_diff.png", Settings.ToolbarIconSize));
 		btFillDiff.setFocusable(false);
 		btFillDiff.setEnabled(false);
-		btFillDiff.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.isEmpty())
-					return;
+		btFillDiff.addActionListener(actionEvent -> {
+			if (Track.data.isEmpty())
+				return;
 
-				int start = panelTrackData.getSelectedRow();
-				int end = start + panelTrackData.getSelectedRowCount();
+			int start = panelTrackData.getSelectedRow();
+			int end = start + panelTrackData.getSelectedRowCount();
 
-				frmFillDiff frm = new frmFillDiff(Settings);
-				EditDiffResult res = frm.showDialog(Settings, Track, start, end);
-				if (res.Valid) {
-					BackupInCGX();
+			frmFillDiff frm = new frmFillDiff(Settings);
+			EditDiffResult res = frm.showDialog(Settings, Track, start, end);
+			if (res.Valid) {
+				BackupInCGX();
 
-					for (int i = res.Start; i <= res.End; i++) {
-						Track.data.get(i).setDiff(res.Difficulty);
-					}
-
-					Track.isCalculated = false;
-					Track.isModified = true;
-					panelTrackData.refresh();
-					panelProfil.RefreshProfilChart();
-					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelSpeed.Refresh(Track, Settings);
-					jPanelSpeedSlope.Refresh(Track, Settings);
-					panelMap.RefreshTrack(Track, false);
-					RefreshStatusbar(Track);
+				for (int i = res.Start; i <= res.End; i++) {
+					Track.data.get(i).setDiff(res.Difficulty);
 				}
+
+				Track.isCalculated = false;
+				Track.isModified = true;
+				panelTrackData.refresh();
+				panelProfil.RefreshProfilChart();
+				jPanelTimeDist.Refresh(Track, Settings);
+				jPanelSpeed.Refresh(Track, Settings);
+				jPanelSpeedSlope.Refresh(Track, Settings);
+				panelMap.RefreshTrack(Track, false);
+				RefreshStatusbar(Track);
 			}
 		});
 		ToolBarMain.add(btFillDiff);
@@ -2420,61 +2452,59 @@ public class frmMain extends javax.swing.JFrame {
 		btFillCoeff.setIcon(Utils.getIcon(this, "fill_coeff.png", Settings.ToolbarIconSize));
 		btFillCoeff.setFocusable(false);
 		btFillCoeff.setEnabled(false);
-		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.isEmpty())
-					return;
+		btFillCoeff.addActionListener(actionEvent -> {
+			if (Track.data.isEmpty())
+				return;
 
-				int start = panelTrackData.getSelectedRow();
-				int end = start + panelTrackData.getSelectedRowCount();
+			int start = panelTrackData.getSelectedRow();
+			int end = start + panelTrackData.getSelectedRowCount();
 
-				frmFillCoeff frm = new frmFillCoeff(Settings);
-				EditCoeffResult res = frm.showDialog(Settings, Track, start, end);
-				if (res.Valid) {
-					BackupInCGX();
+			frmFillCoeff frm = new frmFillCoeff(Settings);
+			EditCoeffResult res = frm.showDialog(Settings, Track, start, end);
+			if (res.Valid) {
+				BackupInCGX();
 
-					if (res.Start == res.End) {
-						Track.data.get(res.Start).setCoeff(res.Start_Coeff);
-					} else {
-						double x1 = Track.data.get(res.Start).getTotal(CgConst.UNIT_METER);// cd.data[frm.start].Total;
-						double y1 = res.Start_Coeff; // frm.startval;
+				if (res.Start == res.End) {
+					Track.data.get(res.Start).setCoeff(res.Start_Coeff);
+				} else {
+					double x1 = Track.data.get(res.Start).getTotal(CgConst.UNIT_METER);// cd.data[frm.start].Total;
+					double y1 = res.Start_Coeff; // frm.startval;
 
-						double x2 = Track.data.get(res.End).getTotal(CgConst.UNIT_METER); // cd.data[frm.end].Total;
-						double y2 = res.End_Coeff; // frm.endval;
+					double x2 = Track.data.get(res.End).getTotal(CgConst.UNIT_METER); // cd.data[frm.end].Total;
+					double y2 = res.End_Coeff; // frm.endval;
 
-						CalcLineResult rc = new CalcLineResult();
-						rc = Utils.CalcLine(x1, y1, x2, y2, rc);
+					CalcLineResult rc = new CalcLineResult();
+					rc = Utils.CalcLine(x1, y1, x2, y2, rc);
 
-						// Line equation calc with "Y"=distance and "X"=Coeff
-						double x = 0.0;
-						double offset = 0.0;
-						double coeff = 0;
+					// Line equation calc with "Y"=distance and "X"=Coeff
+					double x = 0.0;
+					double offset = 0.0;
+					double coeff = 0;
 
-						for (int i = res.Start; i <= res.End; i++) {
-							x = Track.data.get(i).getTotal(CgConst.UNIT_METER);
-							offset = offset + Track.data.get(i).getRecovery();
+					for (int i = res.Start; i <= res.End; i++) {
+						x = Track.data.get(i).getTotal(CgConst.UNIT_METER);
+						offset = offset + Track.data.get(i).getRecovery();
 
-							coeff = (rc.a * x + rc.b) + offset;
+						coeff = (rc.a * x + rc.b) + offset;
 
-							// Validity tests
-							if (coeff > CgConst.MAX_COEFF)
-								coeff = CgConst.MAX_COEFF;
-							if (coeff < 0)
-								coeff = 0;
+						// Validity tests
+						if (coeff > CgConst.MAX_COEFF)
+							coeff = CgConst.MAX_COEFF;
+						if (coeff < 0)
+							coeff = 0;
 
-							Track.data.get(i).setCoeff(coeff);
-						}
+						Track.data.get(i).setCoeff(coeff);
 					}
-
-					Track.isCalculated = false;
-					Track.isModified = true;
-					panelTrackData.refresh();
-					panelProfil.RefreshProfilChart();
-					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelSpeed.Refresh(Track, Settings);
-					jPanelSpeedSlope.Refresh(Track, Settings);
-					RefreshStatusbar(Track);
 				}
+
+				Track.isCalculated = false;
+				Track.isModified = true;
+				panelTrackData.refresh();
+				panelProfil.RefreshProfilChart();
+				jPanelTimeDist.Refresh(Track, Settings);
+				jPanelSpeed.Refresh(Track, Settings);
+				jPanelSpeedSlope.Refresh(Track, Settings);
+				RefreshStatusbar(Track);
 			}
 		});
 		ToolBarMain.add(btFillCoeff);
@@ -2568,7 +2598,7 @@ public class frmMain extends javax.swing.JFrame {
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
-	 * 
+	 *
 	 * @param tabbedPane JTabbedPane where we want to add the tab
 	 * @param tab        Tab to add
 	 * @param title      Title of the tab
@@ -2623,8 +2653,9 @@ public class frmMain extends javax.swing.JFrame {
 		setIconImages(null);
 
 		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
 			public void windowClosing(java.awt.event.WindowEvent evt) {
-				formWindowClosing(evt);
+				formWindowClosing();
 			}
 		});
 
@@ -2834,7 +2865,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelStatistics = new JPanelStatistics(Settings);
 		LbTabStatistics = addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
-		
+
 		// -- Tab - Weather
 				// ---------------------------------------------------
 				panelWeather = new JPanelWeather(Settings);
@@ -2849,7 +2880,7 @@ public class frmMain extends javax.swing.JFrame {
 				Utils.getIcon(this, "search.png", Settings.TabIconSize));
 
 		// -- Create the tab bar
-		TabbedPaneAnalysis = new javax.swing.JTabbedPane(JTabbedPane.LEFT);
+		TabbedPaneAnalysis = new javax.swing.JTabbedPane(SwingConstants.LEFT);
 		jPanelAnalyze.add(TabbedPaneAnalysis, java.awt.BorderLayout.CENTER);
 
 		// -- Tab Analysis : Time/Distance
@@ -3002,7 +3033,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Find the previous or next mark from the current position.
-	 * 
+	 *
 	 * @param currentPosition The index of the current position in the table.
 	 * @param direction       The direction that should be used to find the next
 	 *                        mark : "forward", "backward"
@@ -3193,7 +3224,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Load a GPX file
-	 * 
+	 *
 	 * @param filename file name
 	 */
 	private void LoadGPX(String filename) {
@@ -3331,7 +3362,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Load a CGX file
-	 * 
+	 *
 	 * @param filename File name
 	 */
 	private void LoadCGX(String filename) {
@@ -3532,7 +3563,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Called by the quit application menu
-	 * 
+	 *
 	 * @param evt
 	 */
 	private void mnuQuitActionPerformed(java.awt.event.ActionEvent evt) {
@@ -3614,10 +3645,10 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Called when the main form is closing
-	 * 
+	 *
 	 * @param evt
 	 */
-	private void formWindowClosing(java.awt.event.WindowEvent evt) {
+	private void formWindowClosing() {
 		if (Track.isModified) {
 			Object[] options = { " " + bundle.getString("frmMain.ClosingYes") + " ",
 					" " + bundle.getString("frmMain.ClosingNo") + " " };
@@ -3679,7 +3710,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Attempts to open a file (GPX or CGX).
-	 * 
+	 *
 	 * @param filePath The absolute file path.
 	 */
 	private void tryOpenRecentFile(String filePath) {
@@ -3780,7 +3811,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Refresh the statusbar
-	 * 
+	 *
 	 * @param tdata Track data object
 	 */
 	private void RefreshStatusbar(TrackData tdata) {
@@ -3910,7 +3941,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Add "filename" to the CGX mru menu
-	 * 
+	 *
 	 * @param filename name of the file to add
 	 */
 	public void AddMruGPX(String filename) {
@@ -3972,7 +4003,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Add "filename" to the CGX mru menu
-	 * 
+	 *
 	 * @param filename name of the file to add
 	 */
 	public void AddMruCGX(String filename) {
@@ -4039,7 +4070,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Set the default font
-	 * 
+	 *
 	 * @param f font
 	 */
 	public static void setUIFont(javax.swing.plaf.FontUIResource f) {
@@ -4055,7 +4086,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Everything start here!!!
-	 * 
+	 *
 	 * @param args the command line arguments
 	 */
 	public static void main(final String[] args) {
@@ -4118,7 +4149,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
 			ex.printStackTrace();
-		}   
+		}
 
 		// -- Set things according to the OS
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
@@ -4148,7 +4179,7 @@ public class frmMain extends javax.swing.JFrame {
 		 */
 		java.awt.EventQueue.invokeLater(() -> {
 			try {
-				frmMain window = new frmMain(args);
+				frmMain window = new frmMain();
 				window.setVisible(true);
 				// window.frame.setVisible(true);
 				// new frmMain(args).setVisible(true);
@@ -4166,7 +4197,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Determines if a more recent version is available.
-	 * 
+	 *
 	 * @param remoteVersionNumber The current version on the server.
 	 */
 	public static boolean isRemoteVersionNewer(String remoteVersionNumber) {
