@@ -116,7 +116,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 						GridBagConstraints.HORIZONTAL);
 
 				tfHeartRate = new JTextField();
-				Utils.addComponent(paneGlobal, tfHeartRate, 1, 1, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+				Utils.addComponent(paneGlobal, tfHeartRate, 1, 2, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
 						GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Create the panel for the bottom buttons ---------------------------
