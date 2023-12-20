@@ -110,8 +110,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		// -- Heart Rate
 				lblHeartRate = new javax.swing.JLabel();
-				lblHeartRate.setText(bundle.getString("frmEditPoint.lbHeartRate.text") + " " + "("
-						+ Utils.uSpeed2String(settings.Unit, settings.isPace) + ")");
+				lblHeartRate.setText(bundle.getString("frmEditPoint.lbHeartRate.text") + " (bpm)");
 				Utils.addComponent(paneGlobal, lblHeartRate, 0, 2, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 						GridBagConstraints.HORIZONTAL);
 
