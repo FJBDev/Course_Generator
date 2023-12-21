@@ -46,6 +46,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 	private JTextField tfSlope;
 	private JTextField tfSpeed;
 	private JTextField tfHeartRate;
+	private int pulse;
 	private double slope;
 	private double speed;
 	private CgSettings settings;
@@ -155,13 +156,14 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
+		pulse = p.getPulse();
 
 		double speedToDisplay = Utils.SpeedMeterToCurrentUnits(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
 		tfSpeed.setText(String.valueOf(speedToDisplay));
-		tfHeartRate.setText(String.valueOf(speedToDisplay));
+		tfHeartRate.setText(String.valueOf(pulse));
 		// End set field
 		ok = false;
 
@@ -174,6 +176,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 			double convertedInputSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
 			p.setSpeed(convertedInputSpeed);
+			p.setHeartRate(pulse);
 		}
 		return ok;
 	}
@@ -216,22 +219,31 @@ public class frmEditPoint extends javax.swing.JDialog {
 	}
 
 	private void RequestToClose() {
+
 		boolean param_valid = true;
 		// check that the parameters are ok
 
 		slope = Utils.ParseDoubleEx(tfSlope.getText(), -1000.0);
-		if ((slope >= -50) && (slope <= 50))
+		if ((slope >= -50) && (slope <= 50)) {
 			tfSlope.setBackground(Color.WHITE);
-		else {
+		} else {
 			tfSlope.setBackground(Color.MAGENTA);
 			param_valid = false;
 		}
 
 		speed = Utils.ParseDoubleEx(tfSpeed.getText(), -1000.0);
-		if ((speed > 0) && (speed < 100))
+		if ((speed > 0) && (speed < 100)) {
 			tfSpeed.setBackground(Color.WHITE);
-		else {
+		} else {
 			tfSpeed.setBackground(Color.MAGENTA);
+			param_valid = false;
+		}
+		
+		pulse = Integer.valueOf(tfHeartRate.getText());
+		if ((pulse > 0) && (pulse < 300)) {
+			tfHeartRate.setBackground(Color.WHITE);
+		} else {
+			tfHeartRate.setBackground(Color.MAGENTA);
 			param_valid = false;
 		}
 

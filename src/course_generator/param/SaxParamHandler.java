@@ -200,7 +200,7 @@ public class SaxParamHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("SPEED")) {
 				speed = characters;
 			}else if (qName.equalsIgnoreCase("PULSE")) {
-				pulse = 0 ;
+				pulse = ManageInt(0, ERR_READ_DOUBLE);
 			}else if (qName.equalsIgnoreCase("ITEM")) {
 				level--;
 				paramdata.data.add(new CgParam(slope, speed, pulse));
