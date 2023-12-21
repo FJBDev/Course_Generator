@@ -80,14 +80,15 @@ public class ParamPointsModel extends AbstractTableModel {
 
 		case 1:
 			// Speed
-			if (settings.Unit == CgConst.UNIT_MILES_FEET)
+			if (settings.Unit == CgConst.UNIT_MILES_FEET) {
 				return Utils.Km2Miles(param.data.get(rowIndex).getSpeedNumber());
-			else
+			} else {
 				return param.data.get(rowIndex).getSpeedNumber();
+			}
 
 		case 2:
 			// Heart rate
-				return param.data.get(rowIndex).getHeartRate();
+				return param.data.get(rowIndex).getPulse();
 
 		default:
 			throw new IllegalArgumentException();

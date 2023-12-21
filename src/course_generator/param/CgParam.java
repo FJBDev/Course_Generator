@@ -29,7 +29,6 @@ public class CgParam implements Comparable<CgParam> {
 	private int Pulse;
 	private double Slope;
 	private String Speed;
-	private double HeartRate;
 
 	public CgParam(double slope, String speed, int pulse) {
 		Pulse = pulse;
@@ -76,12 +75,8 @@ public class CgParam implements Comparable<CgParam> {
 		Speed = String.valueOf(speed);
 	}
 
-	public double getHeartRate() {
-		return HeartRate;
-	}
-
-	public void setHeartRate(double heartRate) {
-		HeartRate = heartRate;
+	public void setPulse(int pulse) {
+		Pulse = pulse;
 	}
 
 	public int getPulse() {

@@ -176,7 +176,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 			double convertedInputSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
 			p.setSpeed(convertedInputSpeed);
-			p.setHeartRate(pulse);
+			p.setPulse(pulse);
 		}
 		return ok;
 	}
