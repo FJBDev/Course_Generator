@@ -42,12 +42,12 @@ public class ParamData {
 	public ArrayList<CgParam> data;
 
 	public ParamData() {
-		data = new ArrayList<CgParam>();
+		data = new ArrayList<>();
 	}
 
 	/**
 	 * Load parameters from disk
-	 * 
+	 *
 	 * @param name File name to load
 	 * @throws Exception
 	 */
@@ -55,14 +55,15 @@ public class ParamData {
 		SaxParamHandler paramHandler = new SaxParamHandler();
 
 		int ret = paramHandler.readDataFromParam(name, this);
-		if (ret != 0)
+		if (ret != 0) {
 			System.out.println("Load parameters '" + name + "'from disk. Error line =" + paramHandler.getErrLine());
+		}
 
 	} // -- Load
 
 	/**
 	 * Save parameters on disk
-	 * 
+	 *
 	 * @param fname Name of the file
 	 */
 	public void SaveCurve(String fname, int unit) {
@@ -87,6 +88,7 @@ public class ParamData {
 				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.getSlope()));
 				// Saving the curve speeds using the metric system.
 				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.getSpeedNumber()));
+				Utils.WriteStringToXML(writer, "Pulse", String.format(Locale.ROOT, "%s", curvePoint.getPulse()));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -103,7 +105,7 @@ public class ParamData {
 
 	/**
 	 * Find the maximum speed of the list
-	 * 
+	 *
 	 * @return Maximum speed en km/h
 	 */
 	public double FindMaxSpeed() {
@@ -111,12 +113,14 @@ public class ParamData {
 		{
 			double max = -9999.0;
 			for (int j = 0; j <= data.size() - 1; j++) {
-				if (data.get(j).getSpeedNumber() > max)
+				if (data.get(j).getSpeedNumber() > max) {
 					max = data.get(j).getSpeedNumber();
+				}
 			}
 			return max;
-		} else
+		} else { // Count
 			return 0;
+		}
 	}
 
 } // Class
