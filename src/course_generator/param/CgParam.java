@@ -26,23 +26,26 @@ import course_generator.utils.Utils;
  */
 public class CgParam implements Comparable<CgParam> {
 
+	private int Pulse;
 	private double Slope;
 	private String Speed;
 	private double HeartRate;
 
-	public CgParam(double slope, String speed) {
+	public CgParam(double slope, String speed, int pulse) {
+		Pulse = pulse;
 		Slope = slope;
 		Speed = speed;
 	}
 
 	@Override
 	public int compareTo(CgParam p) {
-		if (Slope - p.Slope < 0)
+		if (Slope - p.Slope < 0) {
 			return -1;
-		else if (Slope - p.Slope > 0)
+		} else if (Slope - p.Slope > 0) {
 			return 1;
-		else
+		} else {
 			return 0;
+		}
 	}
 
 	public double getSlope() {
@@ -79,6 +82,10 @@ public class CgParam implements Comparable<CgParam> {
 
 	public void setHeartRate(double heartRate) {
 		HeartRate = heartRate;
+	}
+
+	public int getPulse() {
+		return Pulse;
 	}
 
 }

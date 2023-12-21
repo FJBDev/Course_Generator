@@ -43,6 +43,7 @@ public class SaxParamHandler extends DefaultHandler {
 	private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_NOTEXIST = -6;
+	private int pulse = 0;
 	private double slope = 0.0;
 	private String speed = "0.0";
 
@@ -50,7 +51,7 @@ public class SaxParamHandler extends DefaultHandler {
 
 	/**
 	 * Read the CGX file from disc
-	 * 
+	 *
 	 * @param filename Name of the cgx file to read
 	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
 	 *         the reading of the file ERR_READ_DOUBLE = Parsing error during the
@@ -77,11 +78,13 @@ public class SaxParamHandler extends DefaultHandler {
 
 		File f = new File(filename);
 		if (f.isFile() && f.canRead()) {
-			if (mode == 0)
+			if (mode == 0) {
 				paramdata.data.clear();
+			}
 			parser.parse(f, this);
-		} else
+		} else {
 			errcode = ERR_READ_NOTEXIST;
+		}
 
 		return errcode;
 	}
@@ -111,7 +114,7 @@ public class SaxParamHandler extends DefaultHandler {
 
 	/**
 	 * Parse a string element
-	 * 
+	 *
 	 * @return Return the parsed value
 	 */
 	private String ManageString() {
@@ -122,9 +125,9 @@ public class SaxParamHandler extends DefaultHandler {
 
 	/**
 	 * Parse a double element
-	 * 
+	 *
 	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occure
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -137,9 +140,19 @@ public class SaxParamHandler extends DefaultHandler {
 		}
 	}
 
+	private int ManageInt(int _default, int _errcode) {
+		try {
+			return Integer.parseInt(characters);
+		} catch (NumberFormatException e) {
+			errcode = _errcode;
+			errline = locator.getLineNumber();
+			return _default;
+		}
+	}
+
 	/**
 	 * Parse a integer element
-	 * 
+	 *
 	 * @param _default Default value
 	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
@@ -152,7 +165,7 @@ public class SaxParamHandler extends DefaultHandler {
 
 	/**
 	 * Parse a boolean element
-	 * 
+	 *
 	 * @param _default Default value
 	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
@@ -176,8 +189,9 @@ public class SaxParamHandler extends DefaultHandler {
 		}
 
 		if (level == LEVEL_PARAM) {
-			if (qName.equalsIgnoreCase("PARAM"))
+			if (qName.equalsIgnoreCase("PARAM")) {
 				level--;
+			}
 		}
 
 		if (level == LEVEL_ITEM) {
@@ -185,9 +199,11 @@ public class SaxParamHandler extends DefaultHandler {
 				slope = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("SPEED")) {
 				speed = characters;
-			} else if (qName.equalsIgnoreCase("ITEM")) {
+			}else if (qName.equalsIgnoreCase("PULSE")) {
+				pulse = 0 ;
+			}else if (qName.equalsIgnoreCase("ITEM")) {
 				level--;
-				paramdata.data.add(new CgParam(slope, speed));
+				paramdata.data.add(new CgParam(slope, speed, pulse));
 			}
 		} // End LEVEL_ITEM
 
