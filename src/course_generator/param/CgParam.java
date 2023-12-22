@@ -60,7 +60,7 @@ public class CgParam implements Comparable<CgParam> {
 	}
 
 	public double getSpeedNumber() {
-		double speed = 0.0;
+		double speed;
 
 		if (Speed.contains(":")) {
 			// if the speed is a pace, we need to convert it to a 'per hour' number
