@@ -43,8 +43,7 @@ public class ParamPointsModel extends AbstractTableModel {
 		header = new String[3];
 		header[0] = bundle.getString("ParamPointsModel.slope");
 		header[1] = bundle.getString("ParamPointsModel.speed");
-		header[2] ="FC";// bundle.getString("ParamPointsModel.speed");
-		//todo fb ca se passe ici
+		header[2] =bundle.getString("ParamPointsModel.pulse");
 	}
 
 	public void setParam(ParamData p) {
