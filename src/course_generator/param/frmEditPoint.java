@@ -238,7 +238,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 			tfSpeed.setBackground(Color.MAGENTA);
 			param_valid = false;
 		}
-		
+
 		pulse = Integer.valueOf(tfHeartRate.getText());
 		if ((pulse > 0) && (pulse < 300)) {
 			tfHeartRate.setBackground(Color.WHITE);
