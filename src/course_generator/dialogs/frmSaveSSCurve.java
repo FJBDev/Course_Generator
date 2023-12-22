@@ -82,7 +82,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 	 *
 	 * @return
 	 */
-	@Override
 	protected JRootPane createRootPane() {
 		JRootPane rootPane = new JRootPane();
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
@@ -90,7 +89,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
-			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
@@ -98,7 +96,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
-			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
 			}
@@ -180,7 +177,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
-			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setVisible(false);
 			}
@@ -192,7 +188,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
 		btOk.addActionListener(new java.awt.event.ActionListener() {
-			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				RequestToClose();
 			}
@@ -208,20 +203,17 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	@Override
 	public String getName() {
-		if (tfName != null) {
+		if (tfName != null)
 			return tfName.getText();
-		} else {
+		else
 			return "";
-		}
 	}
 
 	public String getComment() {
-		if (tfComment != null) {
+		if (tfComment != null)
 			return tfComment.getText();
-		} else {
+		else
 			return "";
-		}
 	}
 }
