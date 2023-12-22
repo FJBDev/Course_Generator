@@ -24,9 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
+import org.xml.sax.SAXException;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
@@ -51,7 +54,7 @@ public class ParamData {
 	 * @param name File name to load
 	 * @throws Exception
 	 */
-	public void Load(String name) throws Exception {
+	public void Load(String name) throws SAXException, IOException, ParserConfigurationException {
 		SaxParamHandler paramHandler = new SaxParamHandler();
 
 		int ret = paramHandler.readDataFromParam(name, this);
@@ -67,7 +70,8 @@ public class ParamData {
 	 * @param fname Name of the file
 	 */
 	public void SaveCurve(String fname, int unit) {
-		if (data.size() <= 0) {
+
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -109,8 +113,11 @@ public class ParamData {
 	 * @return Maximum speed en km/h
 	 */
 	public double FindMaxSpeed() {
-		if (data.size() > 0) // Count
-		{
+
+		if (data.isEmpty()){ // Count
+			return 0;
+		}
+		else {
 			double max = -9999.0;
 			for (int j = 0; j <= data.size() - 1; j++) {
 				if (data.get(j).getSpeedNumber() > max) {
@@ -118,8 +125,6 @@ public class ParamData {
 				}
 			}
 			return max;
-		} else { // Count
-			return 0;
 		}
 	}
 
