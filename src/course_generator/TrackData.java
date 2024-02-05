@@ -561,6 +561,9 @@ public class TrackData {
 
 				// <name>toto</name>
 				Utils.WriteStringToXML(writer, "name", String.valueOf(i));
+				
+				//todo fb
+				Utils.WriteStringToXML(writer, "hr", r.get);
 
 				writer.writeEndElement();// Trkpt
 
@@ -1432,6 +1435,7 @@ public class TrackData {
 	/**
 	 * Calculate the time for each position of the track
 	 */
+	//todo fb ca se passe ici ?
 	public void Calculate() {
 		int j = 0;
 		int k = 0;
