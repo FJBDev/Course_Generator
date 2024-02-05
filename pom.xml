@@ -61,7 +61,7 @@ mvn versions:display-dependency-updates -->
 		<dependency>
 			<groupId>net.iakovlev</groupId>
 			<artifactId>timeshape</artifactId>
-			<version>2020a.10</version>
+			<version>2020d.12</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jxmapviewer/jxmapviewer2 -->
 		<dependency>
