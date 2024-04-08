@@ -62,6 +62,8 @@ public class CgData {
 	private double dElevation;
 	/** Time from the start to this position (in s) **/
 	private int Time;
+	/** Pulse at this position (in bpm) **/
+	private double Pulse;
 	/**
 	 * Time from the previous position to this position (in s). In float format in
 	 * order to maximize the precision
@@ -133,10 +135,11 @@ public class CgData {
 		this.OptionMiniRoadbook = OptionMiniRoadbook;
 		this.VPosMiniRoadbook = VPosMiniRoadbook;
 		this.CommentMiniRoadbook = CommentMiniRoadbook;
-		if (FontSizeMiniRoadbook == 0)
+		if (FontSizeMiniRoadbook == 0) {
 			this.FontSizeMiniRoadbook = CgConst.DEFAULTMRBFONTSIZE;
-		else
+		} else {
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
+		}
 		this.ToDelete = false;
 		this.isNight = false;
 	}
@@ -236,18 +239,21 @@ public class CgData {
 		switch (unit) {
 		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "feet";
+			}
 			break;
 		default:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		}
 		return s;
@@ -279,18 +285,21 @@ public class CgData {
 		switch (unit) {
 		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "feet";
+			}
 			break;
 		default:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		}
 		return s;
@@ -322,18 +331,21 @@ public class CgData {
 		switch (unit) {
 		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "feet";
+			}
 			break;
 		default:
 			s = String.format("%1.0f ", e);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		}
 		return s;
@@ -374,18 +386,21 @@ public class CgData {
 		switch (unit) {
 		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "miles";
+			}
 			break;
 		default:
 			s = String.format("%1.0f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "m";
+			}
 			break;
 		}
 		return s;
@@ -417,18 +432,21 @@ public class CgData {
 		switch (unit) {
 		case CgConst.UNIT_METER:
 			s = String.format("%1.1f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "km";
+			}
 			break;
 		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.1f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "miles";
+			}
 			break;
 		default:
 			s = String.format("%1.1f ", d);
-			if (withunit)
+			if (withunit) {
 				s = s + "km";
+			}
 			break;
 		}
 		return s;
@@ -471,10 +489,11 @@ public class CgData {
 	}
 
 	public String getSlopeString(boolean withunit) {
-		if (withunit)
+		if (withunit) {
 			return String.format("%1.1f ", getSlope()) + "%";
-		else
+		} else {
 			return String.format("%1.1f ", getSlope());
+		}
 	}
 
 	public void setSlope(double slope) {
@@ -484,7 +503,7 @@ public class CgData {
 	/**
 	 * Returns the speed as a string in the correct format (metric vs imperial, per
 	 * hour vs per mile).
-	 * 
+	 *
 	 * @param unit The unit to use (metric vs imperial).
 	 * @param pace A boolean indicating whether to convert the speed into pace
 	 *             (min/mile).
@@ -496,7 +515,7 @@ public class CgData {
 
 	/**
 	 * Returns the speed in the correct format (metric vs imperial)
-	 * 
+	 *
 	 * @param unit The unit to use (metric vs imperial).
 	 * @return A double containing the speed in the correct format.
 	 */
@@ -514,7 +533,7 @@ public class CgData {
 	/**
 	 * Returns the speed as a string in the correct format (metric vs imperial, per
 	 * hour vs per mile) with or without the string unit.
-	 * 
+	 *
 	 * @param unit     The unit to use (metric vs imperial).
 	 * @param withUnit A boolean indicating if the speed unit needs to be appended
 	 *                 to the returned string.
@@ -532,7 +551,7 @@ public class CgData {
 
 	/**
 	 * Returns the speed as a double
-	 * 
+	 *
 	 * @return A double containing the speed.
 	 */
 	public double getSpeed() {
@@ -591,9 +610,9 @@ public class CgData {
 	public String getTimeLimitString(boolean empty_if_0) {
 		int time = getTimeLimit();
 
-		if ((time == 0) && empty_if_0)
+		if ((time == 0) && empty_if_0) {
 			return "";
-		else {
+		} else {
 			// -- Set the value
 			int nbh = time / 3600;
 			int nbm = (time % 3600) / 60;
@@ -627,9 +646,9 @@ public class CgData {
 	public String getStationString(boolean empty_if_0) {
 		int time = getStation();
 
-		if ((time == 0) && empty_if_0)
+		if ((time == 0) && empty_if_0) {
 			return "";
-		else {
+		} else {
 			// -- Set the value
 			int nbh = time / 3600;
 			int nbm = (time % 3600) / 60;
@@ -712,6 +731,14 @@ public class CgData {
 		d.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 		d.isNight = isNight;
 		return d;
+	}
+
+	public double getPulse() {
+		return Pulse;
+	}
+
+	public void setPulse(double pulse) {
+		Pulse = pulse;
 	}
 
 }

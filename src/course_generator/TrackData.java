@@ -334,8 +334,9 @@ public class TrackData {
 
 		// Scan the data
 		for (CgData r : data) {
-			if (r.getDist(CgConst.UNIT_METER) < 10.0)
+			if (r.getDist(CgConst.UNIT_METER) < 10.0) {
 				nb += 1;
+			}
 		}
 		double p = nb * 100.0 / data.size();
 		CgLog.info("Point density calculation = " + p + "%");
@@ -345,7 +346,7 @@ public class TrackData {
 					String.format(bundle.getString("TrackData.PositionFilterQuestion"), p), "",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 				ok = true;
-			
+
 		}
 
 		return ok;
@@ -365,8 +366,9 @@ public class TrackData {
 		SaxGPXHandler GPXhandler = new SaxGPXHandler();
 
 		int ret = GPXhandler.readDataFromGPX(name, this, mode);
-		if (ret != 0)
+		if (ret != 0) {
 			CgLog.error("TrackData.OpenGPX : Error while reading '" + name + "'. Line =" + GPXhandler.getErrLine());
+		}
 
 		CgLog.info(data.size() + " positions loaded.");
 
@@ -388,8 +390,9 @@ public class TrackData {
 		isCalculated = false;
 		isModified = false;
 
-		if (mode == 0)
+		if (mode == 0) {
 			isNewTrack = true;
+		}
 
 		// -- Calculate the main data of the track
 		CalcMainData(true, false);
@@ -561,9 +564,15 @@ public class TrackData {
 
 				// <name>toto</name>
 				Utils.WriteStringToXML(writer, "name", String.valueOf(i));
-				
-				//todo fb
-				Utils.WriteStringToXML(writer, "hr", r.get);
+
+				// Begin: TrackPointExtension
+				writer.writeStartElement("gpxtpx:TrackPointExtension");
+
+				//<gpxtpx:hr>88</gpxtpx:hr>
+				Utils.WriteStringToXML(writer, "gpxtpx:hr", String.valueOf(r.getPulse()));
+
+				// End: TrackPointExtension
+				writer.writeEndElement();
 
 				writer.writeEndElement();// Trkpt
 
@@ -642,17 +651,21 @@ public class TrackData {
 					if (r.getName().isEmpty()) {
 						Utils.WriteStringToXML(writer, "name", String.format("NoName%d", i));
 						i++;
-					} else
+					} else {
 						Utils.WriteStringToXML(writer, "name", r.getName());
+					}
 
 					// <sym>Flag, Green</sym>
 					s = "Flag, Green"; // Par defaut
-					if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0)
+					if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0) {
 						s = "Summit";
-					if ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
+					}
+					if ((r.getTag() & CgConst.TAG_WATER_PT) != 0) {
 						s = "Bar";
-					if ((r.getTag() & CgConst.TAG_EAT_PT) != 0)
+					}
+					if ((r.getTag() & CgConst.TAG_EAT_PT) != 0) {
 						s = "Restaurant";
+					}
 
 					Utils.WriteStringToXML(writer, "sym", s);
 
@@ -719,14 +732,16 @@ public class TrackData {
 
 					// <Comment>AAA</Comment>
 					String s = r.getComment().trim();
-					if (s.equals(""))
+					if (s.equals("")) {
 						s = " ";
+					}
 					Utils.WriteStringToXML(writer, "Comment", s);
 
 					// <Name>AAA</Name>
 					s = r.getName().trim();
-					if (s.equals(""))
+					if (s.equals("")) {
 						s = " ";
+					}
 					Utils.WriteStringToXML(writer, "Name", s);
 
 					// <Tag>1234</Tag>
@@ -874,8 +889,9 @@ public class TrackData {
 		// Scan the data
 		for (i = 0; i < data.size() - 6; i++) {
 			r = data.get(i);
-			if (r.ToDelete)
+			if (r.ToDelete) {
 				continue;
+			}
 
 			r1 = data.get(i + 1);
 			r2 = data.get(i + 2);
@@ -903,8 +919,9 @@ public class TrackData {
 
 		// Removed the marked points
 		for (i = data.size() - 1; i >= 0; i--) {
-			if (data.get(i).ToDelete)
+			if (data.get(i).ToDelete) {
 				data.remove(i);
+			}
 		}
 
 	}
@@ -926,8 +943,9 @@ public class TrackData {
 		AscTime = resClimb.tp;
 		DescTime = resClimb.tm;
 
-		if (CalcHour)
+		if (CalcHour) {
 			TotalTime = CalcHour();
+		}
 
 		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
 		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
@@ -1020,6 +1038,7 @@ public class TrackData {
 	 * Calculate slope
 	 */
 	public void CalcSlope() {
+
 		double delta = 0;
 		double dist = 0;
 		double mLat = 0;
@@ -1185,18 +1204,21 @@ public class TrackData {
 			switch (unit) {
 			case CgConst.UNIT_METER:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "m";
+				}
 				break;
 			case CgConst.UNIT_MILES_FEET:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "feet";
+				}
 				break;
 			default:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "m";
+				}
 				break;
 			}
 			return s;
@@ -1222,18 +1244,21 @@ public class TrackData {
 			switch (unit) {
 			case CgConst.UNIT_METER:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "m";
+				}
 				break;
 			case CgConst.UNIT_MILES_FEET:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "feet";
+				}
 				break;
 			default:
 				s = String.format("%1.0f", e);
-				if (withunit)
+				if (withunit) {
 					s = s + "m";
+				}
 				break;
 			}
 			return s;
@@ -1450,6 +1475,7 @@ public class TrackData {
 		double night = 0.0;
 		double dt = 0.0;
 		double ef = 1.0;
+		int pulse = 0;
 		boolean ok;
 
 		if (param == null) {
@@ -1496,6 +1522,9 @@ public class TrackData {
 					y1 = param.data.get(k).getSpeedNumber();
 					x2 = param.data.get(j).getSlope();
 					y2 = param.data.get(j).getSpeedNumber();
+
+					pulse = param.data.get(j).getPulse();
+
 					ok = true;
 					break;
 				}
@@ -1570,6 +1599,8 @@ public class TrackData {
 				r.setSpeed(0.0);
 			}
 			r.setHour(StartTime.plusSeconds((int) (Math.round(dt))));
+
+			r.setPulse(pulse);
 		} // End of the calculation loop --
 
 		// -- Update the road distance for the track
@@ -1641,8 +1672,9 @@ public class TrackData {
 		CgData r3 = null;
 
 		// -- Reset bit 0 & 1 of 'Tag' variable
-		for (CgData r : data)
+		for (CgData r : data) {
 			r.setTag(r.getTag() & 0xFC);
+		}
 
 		// -- Main loop
 		for (i = 0; i < data.size(); i++) {
@@ -1739,8 +1771,9 @@ public class TrackData {
 
 			// -- Set the line number
 			int n = 1;
-			for (CgData r : data)
+			for (CgData r : data) {
 				r.setNum(n++);
+			}
 
 			// -- Refresh
 			CalcDist();
@@ -1872,8 +1905,9 @@ public class TrackData {
 		} catch (Exception e) {
 		}
 
-		if (ret != 0)
+		if (ret != 0) {
 			CgLog.error("TrackData.OpenCGX : Error while reading '" + name + "'. Line =" + CGXhandler.getErrLine());
+		}
 
 		CgLog.info(data.size() + " positions loaded.");
 
@@ -1894,8 +1928,9 @@ public class TrackData {
 
 		isCalculated = false;
 		isModified = false;
-		if (mode == 0)
+		if (mode == 0) {
 			isNewTrack = true;
+		}
 
 		// -- Calculate the main data of the track
 		CalcMainData(true, false);
@@ -2204,8 +2239,9 @@ public class TrackData {
 	 * @param separator 0=dot 1=comma
 	 */
 	public void SaveCSV(String name, int start, int end, int unit, int separator) {
-		if (data.isEmpty())
+		if (data.isEmpty()) {
 			return;
+		}
 
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		StringBuilder s = new StringBuilder();
@@ -2213,10 +2249,11 @@ public class TrackData {
 		long ts = System.currentTimeMillis();
 
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
-		if (separator == 0)
+		if (separator == 0) {
 			symbols.setDecimalSeparator('.');
-		else
+		} else {
 			symbols.setDecimalSeparator(',');
+		}
 
 		DecimalFormat decimalFormat7 = new DecimalFormat("##0.#######", symbols);
 		DecimalFormat decimalFormat1 = new DecimalFormat("##0.#", symbols);
@@ -2331,8 +2368,9 @@ public class TrackData {
 			return;
 		}
 
-		for (StatData st : StatSlope)
+		for (StatData st : StatSlope) {
 			st.Init();
+		}
 
 		int j = 0;
 		boolean first = true;
@@ -2431,14 +2469,17 @@ public class TrackData {
 			return;
 		}
 
-		for (StatData st : StatElev)
+		for (StatData st : StatElev) {
 			st.Init();
+		}
 
-		for (StatData st : StatElevNight)
+		for (StatData st : StatElevNight) {
 			st.Init();
+		}
 
-		for (StatData st : StatElevDay)
+		for (StatData st : StatElevDay) {
 			st.Init();
+		}
 
 		int j = 0;
 		boolean first = true;
@@ -2881,8 +2922,9 @@ public class TrackData {
 
 
 	public void determineTrackTimeZone() {
-		if (this.data == null || this.data.isEmpty())
+		if (this.data == null || this.data.isEmpty()) {
 			return;
+		}
 
 		timeZoneId = Utils.getTimeZoneFromLatLon(this.data.get(0).getLatitude(), this.data.get(0).getLongitude())
 				.getID();
@@ -2891,11 +2933,13 @@ public class TrackData {
 	}
 
 	public void determineSunriseSunsetTimes() {
-		if (this.data == null || this.data.isEmpty())
+		if (this.data == null || this.data.isEmpty()) {
 			return;
+		}
 
-		if (timeZoneId.equals(""))
+		if (timeZoneId.equals("")) {
 			determineTrackTimeZone();
+		}
 
 		EndNightTime = Utils.determineSunRiseTimes(StartTime, this.data.get(0).getLatitude(),
 				this.data.get(0).getLongitude(), timeZoneId);
@@ -2908,8 +2952,9 @@ public class TrackData {
 	 * Copy the smoothed elevation in the elevation field
 	 */
 	public void SelectSmoothedElevation() {
-		if (this.data == null || this.data.isEmpty())
+		if (this.data == null || this.data.isEmpty()) {
 			return;
+		}
 
 		for (CgData r : data) {
 			r.setElevation(r.getElevationSmoothed(CgConst.UNIT_METER));
@@ -2920,8 +2965,9 @@ public class TrackData {
 	 * Copy the not smoothed elevation in the elevation field
 	 */
 	public void SelectNotSmoothedElevation() {
-		if (this.data == null || this.data.isEmpty())
+		if (this.data == null || this.data.isEmpty()) {
 			return;
+		}
 
 		for (CgData r : data) {
 			r.setElevation(r.getElevationNotSmoothed(CgConst.UNIT_METER));
@@ -2932,8 +2978,9 @@ public class TrackData {
 	 * Copy the Not smoothed elevation in the smoothed elevation field
 	 */
 	public void CopyNotSmoothedInSmoothedElevation() {
-		if (this.data == null || this.data.isEmpty())
+		if (this.data == null || this.data.isEmpty()) {
 			return;
+		}
 
 		for (CgData r : data) {
 			r.setElevationSmoothed(r.getElevationNotSmoothed(CgConst.UNIT_METER));

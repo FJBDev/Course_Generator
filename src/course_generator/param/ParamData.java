@@ -22,6 +22,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,7 +43,7 @@ import course_generator.utils.Utils;
 public class ParamData {
 	public String name = "";
 	public String comment = "";
-	public ArrayList<CgParam> data;
+	public List<CgParam> data;
 
 	public ParamData() {
 		data = new ArrayList<>();
