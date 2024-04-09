@@ -88,6 +88,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_distcumul = 0.0;
 	private double trkpt_diff = 0;
 	private double trkpt_coeff = 0;
+	private int trkpt_pulse = 0;
 	private double trkpt_recup = 0;
 	private double trkpt_speed = 0;
 	private int trkpt_timesecond = 0;
@@ -527,6 +528,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				}
 			} else if (qName.equalsIgnoreCase("RECUP")) {
 				trkpt_recup = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("PULSE")) {
+				trkpt_pulse = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TIMESECONDE")) {
 				trkpt_timesecond = ManageInt(0, ERR_READ_INT);
 				trkdata.isTimeLoaded = true;
@@ -579,6 +582,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_diff, // double Diff
 							trkpt_coeff, // double Coeff
 							trkpt_recup, // double Recup
+							trkpt_pulse, // int pulse
 							0.0, // double Slope
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
@@ -612,6 +616,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_diff, // double Diff
 							trkpt_coeff, // double Coeff
 							trkpt_recup, // double Recup
+							trkpt_pulse, // int Pulse
 							0.0, // double Slope
 							trkpt_speed, // double Speed
 							0.0, // double dElevation

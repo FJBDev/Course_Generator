@@ -63,7 +63,7 @@ public class CgData {
 	/** Time from the start to this position (in s) **/
 	private int Time;
 	/** Pulse at this position (in bpm) **/
-	private double Pulse;
+	private int Pulse;
 	/**
 	 * Time from the previous position to this position (in s). In float format in
 	 * order to maximize the precision
@@ -102,7 +102,7 @@ public class CgData {
 
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed,
 			double ElevationSmoothed, double ElevationMemo, int Tag, double Dist, double Total, double Diff,
-			double Coeff, double Recup, double Slope, double Speed, double dElevation, int Time, double dTime_f,
+			double Coeff, double Recup, int pulse, double Slope, double Speed, double dElevation, int Time, double dTime_f,
 			int TimeLimit, DateTime Hour, int Station, String Name, String Comment, double tmp1, double tmp2,
 			String FmtLbMiniRoadbook, int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook,
 			int FontSizeMiniRoadbook) {
@@ -119,6 +119,7 @@ public class CgData {
 		this.Diff = Diff;// Elevation in meter
 		this.Coeff = Coeff;
 		this.Recovery = Recup;
+		this.Pulse = pulse;
 		this.Slope = Slope;
 		this.Speed = Speed;
 		this.dElevation = dElevation;
@@ -733,11 +734,11 @@ public class CgData {
 		return d;
 	}
 
-	public double getPulse() {
+	public int getPulse() {
 		return Pulse;
 	}
 
-	public void setPulse(double pulse) {
+	public void setPulse(int pulse) {
 		Pulse = pulse;
 	}
 

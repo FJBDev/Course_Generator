@@ -35,7 +35,7 @@ public class MrbData extends CgData {
 
 	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed,
 			double ElevationSmoothed, double ElevationMemo, int Tag, double Dist, double Total, double Diff,
-			double Coeff, double Recup, double Slope, double Speed, double dElevation, int Time, // Time in second
+			double Coeff, double Recup, int Pulse, double Slope, double Speed, double dElevation, int Time, // Time in second
 			double dTime_f, // Time this part of the track in second (with decimal)
 			int TimeLimit, // Time limit
 			DateTime Hour, // Date and time at this point
@@ -44,7 +44,7 @@ public class MrbData extends CgData {
 			double deltadistance, int deltatime, CalcClimbResult deltaclimb) {
 
 		super(Num, Latitude, Longitude, Elevation, ElevationNotSmoothed, ElevationSmoothed, ElevationMemo, Tag, Dist,
-				Total, Diff, Coeff, Recup, Slope, Speed, dElevation, Time, // Time in second
+				Total, Diff, Coeff, Recup, Pulse, Slope, Speed, dElevation, Time, // Time in second
 				dTime_f, // Time this part of the track in second (with decimal)
 				TimeLimit, // Time limit
 				Hour, // Date and time at this point

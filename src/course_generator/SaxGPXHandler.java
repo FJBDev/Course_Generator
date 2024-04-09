@@ -284,6 +284,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							100.0, // double Diff
 							100.0, // double Coeff
 							0.0, // double Recup
+							0, // Pulse
 							0.0, // double Slope
 							0.0, // double Speed
 							0.0, // double dElevation
@@ -317,6 +318,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							100.0, // double Diff
 							100.0, // double Coeff
 							0.0, // double Recup
+							0, // int Pulse
 							0.0, // double Slope
 							0.0, // double Speed
 							0.0, // double dElevation

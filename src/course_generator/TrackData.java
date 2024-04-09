@@ -1405,11 +1405,7 @@ public class TrackData {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Search the minmimum and maximum elevation of the track betwwen two points
-=======
 	 * Search the minimum and maximum elevation of the track between two points
->>>>>>> refs/remotes/origin/fb-improvements-since-4.6
 	 *
 	 * @param start Starting point
 	 * @param end   Ending point
@@ -1460,7 +1456,6 @@ public class TrackData {
 	/**
 	 * Calculate the time for each position of the track
 	 */
-	//todo fb ca se passe ici ?
 	public void Calculate() {
 		int j = 0;
 		int k = 0;
@@ -1820,6 +1815,7 @@ public class TrackData {
 						data.get(n).getElevationSmoothed(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
 						data.get(n).getTag(), data.get(n).getDist(CgConst.UNIT_METER),
 						data.get(n).getTotal(CgConst.UNIT_METER), data.get(n).getDiff(), data.get(n).getCoeff(), 0.0,
+						0,// pulse
 						data.get(n).getSlope(), data.get(n).getSpeed(CgConst.UNIT_METER),
 						data.get(n).getdElevation(CgConst.UNIT_METER), data.get(n).getTime(), data.get(n).getdTime_f(),
 						data.get(n).getTimeLimit(), data.get(n).getHour(), data.get(n).getStation(),
@@ -2065,6 +2061,7 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "DIFF", nf.format(r.getDiff()));
 				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
+				Utils.WriteStringToXML(writer, "PULSE", nf.format(r.getPulse()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());

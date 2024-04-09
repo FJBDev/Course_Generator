@@ -126,7 +126,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 	/**
 	 * Show the dialog
-	 * 
+	 *
 	 * @param settings   Object containing the settings
 	 * @param track      Object containing the track
 	 * @param start_line Line number where to start
@@ -150,7 +150,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 						r.getElevation(CgConst.UNIT_METER), r.getElevationNotSmoothed(CgConst.UNIT_METER),
 						r.getElevationSmoothed(CgConst.UNIT_METER), r.getElevationMemo(), r.getTag(),
 						r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
-						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
+						r.getRecovery(), r.getPulse(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
 						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
 						r.getStation(), r.getName(), r.getComment(), 0, 0, r.FmtLbMiniRoadbook, r.OptionMiniRoadbook,
 						r.VPosMiniRoadbook, r.CommentMiniRoadbook, r.FontSizeMiniRoadbook, 0, 0, resClimb);
@@ -247,6 +247,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btSaveAsImage.setPreferredSize(new Dimension(btw, bth));
 		btSaveAsImage.setFocusable(false);
 		btSaveAsImage.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SaveProfile();
 			}
@@ -263,6 +264,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btConfig.setPreferredSize(new Dimension(btw, bth));
 		btConfig.setFocusable(false);
 		btConfig.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowConfigMrbDialog();
 
@@ -283,6 +285,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btCopyFormat.setPreferredSize(new Dimension(btw, bth));
 		btCopyFormat.setFocusable(false);
 		btCopyFormat.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				CopyFormat();
 			}
@@ -296,6 +299,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btPasteFormat.setPreferredSize(new Dimension(btw, bth));
 		btPasteFormat.setFocusable(false);
 		btPasteFormat.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				PasteFormat();
 			}
@@ -309,6 +313,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btPasteFormatConfig.setPreferredSize(new Dimension(btw, bth));
 		btPasteFormatConfig.setFocusable(false);
 		btPasteFormatConfig.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowConfigMrbDuplicate();
 			}
@@ -326,6 +331,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btLabelConnectedToBottom.setPreferredSize(new Dimension(btw, bth));
 		btLabelConnectedToBottom.setFocusable(false);
 		btLabelConnectedToBottom.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.LabelToBottom = true;
 				track.isModified = true;
@@ -343,6 +349,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btLabelConnectedToProfil.setPreferredSize(new Dimension(btw, bth));
 		btLabelConnectedToProfil.setFocusable(false);
 		btLabelConnectedToProfil.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.LabelToBottom = false;
 				track.isModified = true;
@@ -362,6 +369,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btNightAndDayHighlight.setPreferredSize(new Dimension(btw, bth));
 		btNightAndDayHighlight.setFocusable(false);
 		btNightAndDayHighlight.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.bShowNightDay = !track.bShowNightDay;
 				btNightAndDayHighlight.setSelected(track.bShowNightDay);
@@ -378,11 +386,12 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		ToolBarMRB.add(lbProfilType);
 
 		// -- "Profil type" selection
-		cbProfilType = new javax.swing.JComboBox<String>();
+		cbProfilType = new javax.swing.JComboBox<>();
 		String profiltype[] = { bundle.getString("FrmMiniroadbook.ProfilSimple"),
 				bundle.getString("FrmMiniroadbook.ProfilRoadTrack"), bundle.getString("FrmMiniroadbook.ProfilSlope") };
-		cbProfilType.setModel(new javax.swing.DefaultComboBoxModel<String>(profiltype));
+		cbProfilType.setModel(new javax.swing.DefaultComboBoxModel<>(profiltype));
 		cbProfilType.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				pnlProfil.setProfileType(cbProfilType.getSelectedIndex());
 				track.isModified = true;
@@ -396,6 +405,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btMemory1.setPreferredSize(new Dimension(btw, bth));
 		btMemory1.setFocusable(false);
 		btMemory1.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				memoFormat[0] = ManageMemories(e, memoFormat[0]);
 				RefreshTooltips();
@@ -409,6 +419,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btMemory2.setPreferredSize(new Dimension(btw, bth));
 		btMemory2.setFocusable(false);
 		btMemory2.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				memoFormat[1] = ManageMemories(e, memoFormat[1]);
 				RefreshTooltips();
@@ -422,6 +433,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btMemory3.setPreferredSize(new Dimension(btw, bth));
 		btMemory3.setFocusable(false);
 		btMemory3.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				memoFormat[2] = ManageMemories(e, memoFormat[2]);
 				RefreshTooltips();
@@ -435,6 +447,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btMemory4.setPreferredSize(new Dimension(btw, bth));
 		btMemory4.setFocusable(false);
 		btMemory4.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				memoFormat[3] = ManageMemories(e, memoFormat[3]);
 				RefreshTooltips();
@@ -448,6 +461,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btMemory5.setPreferredSize(new Dimension(btw, bth));
 		btMemory5.setFocusable(false);
 		btMemory5.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				memoFormat[4] = ManageMemories(e, memoFormat[4]);
 				RefreshTooltips();
@@ -496,23 +510,28 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	}
 
 	protected void CopyFormat() {
-		if (datalist.data.isEmpty())
+		if (datalist.data.isEmpty()) {
 			return;
+		}
 		int row = TableData.getSelectedRow();
-		if (row < 0)
+		if (row < 0) {
 			return;
+		}
 		DupLine = (int) datalist.data.get(row).getNum() - 1;
 	}
 
 	protected void PasteFormat() {
-		if (datalist.data.isEmpty())
+		if (datalist.data.isEmpty()) {
 			return;
+		}
 		int row = TableData.getSelectedRow();
-		if (row < 0)
+		if (row < 0) {
 			return;
+		}
 		int line = (int) datalist.data.get(row).getNum() - 1;
-		if (line > track.data.size())
+		if (line > track.data.size()) {
 			return;
+		}
 
 		track.isModified = true;
 		if ((ConfigDuplication & CgConst.MRB_DUP_POS) != 0) {
@@ -529,20 +548,23 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 			int src = track.data.get(DupLine).OptionMiniRoadbook;
 			int dst = track.data.get(line).OptionMiniRoadbook;
 
-			if ((src & CgConst.MRBOPT_LEFT) != 0)
+			if ((src & CgConst.MRBOPT_LEFT) != 0) {
 				dst = Utils.Set(dst, CgConst.MRBOPT_LEFT);
-			else
+			} else {
 				dst = Utils.Reset(dst, CgConst.MRBOPT_LEFT);
+			}
 
-			if ((src & CgConst.MRBOPT_CENTER) != 0)
+			if ((src & CgConst.MRBOPT_CENTER) != 0) {
 				dst = Utils.Set(dst, CgConst.MRBOPT_CENTER);
-			else
+			} else {
 				dst = Utils.Reset(dst, CgConst.MRBOPT_CENTER);
+			}
 
-			if ((src & CgConst.MRBOPT_RIGHT) != 0)
+			if ((src & CgConst.MRBOPT_RIGHT) != 0) {
 				dst = Utils.Set(dst, CgConst.MRBOPT_RIGHT);
-			else
+			} else {
 				dst = Utils.Reset(dst, CgConst.MRBOPT_RIGHT);
+			}
 
 			track.data.get(line).OptionMiniRoadbook = dst;
 			datalist.data.get(row).OptionMiniRoadbook = dst;
@@ -557,10 +579,11 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 			int src = track.data.get(DupLine).OptionMiniRoadbook;
 			int dst = track.data.get(line).OptionMiniRoadbook;
 
-			if ((src & CgConst.MRBOPT_SHOWTAGS) != 0)
+			if ((src & CgConst.MRBOPT_SHOWTAGS) != 0) {
 				dst = Utils.Set(dst, CgConst.MRBOPT_SHOWTAGS);
-			else
+			} else {
 				dst = Utils.Reset(dst, CgConst.MRBOPT_SHOWTAGS);
+			}
 
 			track.data.get(line).OptionMiniRoadbook = dst;
 			datalist.data.get(row).OptionMiniRoadbook = dst;
@@ -572,17 +595,20 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	}
 
 	protected String ManageMemories(MouseEvent e, String memo) {
-		if (datalist.data.isEmpty())
+		if (datalist.data.isEmpty()) {
 			return memo;
+		}
 		int row = TableData.getSelectedRow();
-		if (row < 0)
+		if (row < 0) {
 			return memo;
+		}
 
 		// -- Left click
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			int line = (int) datalist.data.get(row).getNum() - 1;
-			if (line > track.data.size())
+			if (line > track.data.size()) {
 				return memo;
+			}
 
 			String txt = memo;
 			tfFormat.setText(txt);
@@ -623,8 +649,9 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	protected void SaveProfile() {
 		String s;
 
-		if (track.data.isEmpty())
+		if (track.data.isEmpty()) {
 			return;
+		}
 
 		s = Utils.SaveDialog(this, settings.previousPNGDirectory, "", ".png",
 				bundle.getString("FrmMiniroadbook.PNGFile"), true, bundle.getString("FrmMiniroadbook.FileExist"));
@@ -683,16 +710,20 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		chkSelect = new javax.swing.JCheckBox();
 		chkSelect.setMinimumSize(new Dimension(100, 25));
 		chkSelect.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 
 				int line = (int) datalist.data.get(row).getNum() - 1;
-				if (line > track.data.size())
+				if (line > track.data.size()) {
 					return;
+				}
 
 				if (chkSelect.isSelected()) {
 					track.data.get(line).OptionMiniRoadbook = Utils.Set(track.data.get(line).OptionMiniRoadbook,
@@ -722,15 +753,18 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		spinPosition.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 
 				int line = (int) datalist.data.get(row).getNum() - 1;
-				if (line > track.data.size())
+				if (line > track.data.size()) {
 					return;
+				}
 
 				track.data.get(line).VPosMiniRoadbook = spinPosition.getValueAsInt();
 				datalist.data.get(row).VPosMiniRoadbook = spinPosition.getValueAsInt();
@@ -753,12 +787,15 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btAlignLeft.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignLeft.toolTipText"));
 		btAlignLeft.setFocusable(false);
 		btAlignLeft.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
 				track.data.get(line).OptionMiniRoadbook = Utils.Set(track.data.get(line).OptionMiniRoadbook,
@@ -788,12 +825,15 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btAlignCenter.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignCenter.toolTipText"));
 		btAlignCenter.setFocusable(false);
 		btAlignCenter.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
 				track.data.get(line).OptionMiniRoadbook = Utils.Reset(track.data.get(line).OptionMiniRoadbook,
@@ -823,12 +863,15 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btAlignRight.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignRight.toolTipText"));
 		btAlignRight.setFocusable(false);
 		btAlignRight.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
 				track.data.get(line).OptionMiniRoadbook = Utils.Reset(track.data.get(line).OptionMiniRoadbook,
@@ -871,13 +914,16 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btFormat.setToolTipText(bundle.getString("FrmMiniroadbook.btFormat.toolTipText"));
 		btFormat.setFocusable(false);
 		btFormat.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
 				tfFormat.setText(ShowEditMrbFormatDialog(row));
@@ -902,11 +948,13 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		spinSize.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
 				track.data.get(line).FontSizeMiniRoadbook = spinSize.getValueAsInt();
@@ -928,16 +976,20 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		chkTags = new javax.swing.JCheckBox();
 		chkTags.setMinimumSize(new Dimension(100, 25));
 		chkTags.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (datalist.data.isEmpty())
+				if (datalist.data.isEmpty()) {
 					return;
+				}
 				int row = TableData.getSelectedRow();
-				if (row < 0)
+				if (row < 0) {
 					return;
+				}
 
 				int line = (int) datalist.data.get(row).getNum() - 1;
-				if (line > track.data.size())
+				if (line > track.data.size()) {
 					return;
+				}
 
 				if (chkTags.isSelected()) {
 					track.data.get(line).OptionMiniRoadbook = Utils.Set(track.data.get(line).OptionMiniRoadbook,
@@ -974,12 +1026,14 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		TableData.setModel(modelTableData);// new ParamPointsModel(param));
 		TableData.getTableHeader().setReorderingAllowed(false);
 		TableData.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				RefreshProperties();
 				pnlProfil.setSelLine(TableData.getSelectedRow());
 			}
 		});
 		TableData.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				RefreshProperties();
 				pnlProfil.setSelLine(TableData.getSelectedRow());
@@ -1012,8 +1066,9 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	}
 
 	protected void RefreshProperties() {
-		if (datalist.data.isEmpty())
+		if (datalist.data.isEmpty()) {
 			return;
+		}
 
 		int row = TableData.getSelectedRow();
 		if (row >= 0) {
@@ -1068,14 +1123,16 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- We exit from the format field i
 		if (fe.getSource() == tfFormat) {
-			if (datalist.data.isEmpty())
+			if (datalist.data.isEmpty()) {
 				return;
+			}
 
 			int row = TableData.getSelectedRow();
 			if (row >= 0) {
 				int line = (int) datalist.data.get(row).getNum() - 1;
-				if (line > track.data.size())
+				if (line > track.data.size()) {
 					return;
+				}
 
 				String txt = tfFormat.getText();
 				track.data.get(line).FmtLbMiniRoadbook = txt;
@@ -1089,14 +1146,16 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- We exit from the comment field
 		if (fe.getSource() == tfComment) {
-			if (datalist.data.isEmpty())
+			if (datalist.data.isEmpty()) {
 				return;
+			}
 
 			int row = TableData.getSelectedRow();
 			if (row >= 0) {
 				int line = (int) datalist.data.get(row).getNum() - 1;
-				if (line > track.data.size())
+				if (line > track.data.size()) {
 					return;
+				}
 
 				track.data.get(line).CommentMiniRoadbook = tfComment.getText();
 				datalist.data.get(row).CommentMiniRoadbook = tfComment.getText();
@@ -1109,15 +1168,17 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	}
 
 	private void RefreshTableData() {
-		if (TableData.getRowCount() == 0)
+		if (TableData.getRowCount() == 0) {
 			return;
+		}
 
 		int r = TableData.getSelectedRow();
 		modelTableData.fireTableDataChanged();
-		if (r >= 0)
+		if (r >= 0) {
 			TableData.setRowSelectionInterval(r, r);
-		else
+		} else {
 			TableData.setRowSelectionInterval(0, 0);
+		}
 	}
 
 	private void ShowConfigMrbDialog() {
