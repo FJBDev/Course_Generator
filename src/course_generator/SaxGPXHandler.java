@@ -85,7 +85,7 @@ public class SaxGPXHandler extends DefaultHandler {
 
 	/**
 	 * Read the GPX file from disc
-	 * 
+	 *
 	 * @param filename Name of the gpx file to read
 	 * @param TData    TrackData object where to store the read data
 	 * @param readmode Reading mode 0=Load the complete file 1=Insert the read data
@@ -146,8 +146,9 @@ public class SaxGPXHandler extends DefaultHandler {
 			}
 			// -- Parse the file
 			parser.parse(f, this);
-		} else
+		} else {
 			trkdata.ReadError = ERR_READ_NOTEXIST;
+		}
 
 		return trkdata.ReadError;
 	}
@@ -284,7 +285,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							100.0, // double Diff
 							100.0, // double Coeff
 							0.0, // double Recup
-							0, // Pulse
+							0, // int Pulse
 							0.0, // double Slope
 							0.0, // double Speed
 							0.0, // double dElevation
