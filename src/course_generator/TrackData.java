@@ -1595,6 +1595,7 @@ public class TrackData {
 			}
 			r.setHour(StartTime.plusSeconds((int) (Math.round(dt))));
 
+			pulse = (int) Math.round(x2 == 0? 0 : r.getSlope()* pulse / x2);
 			r.setPulse(pulse);
 		} // End of the calculation loop --
 
