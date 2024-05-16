@@ -43,13 +43,10 @@ public class frmEditPoint extends javax.swing.JDialog {
 	private static final long serialVersionUID = 7993667390549963347L;
 	private java.util.ResourceBundle bundle;
 	private boolean ok;
-	private JLabel lbSlope;
 	private JTextField tfSlope;
-	private JLabel lbSpeed;
 	private JTextField tfSpeed;
-	private JPanel pnButtons;
-	private JButton btCancel;
-	private JButton btOk;
+	private JTextField tfHeartRate;
+	private int pulse;
 	private double slope;
 	private double speed;
 	private CgSettings settings;
@@ -66,6 +63,13 @@ public class frmEditPoint extends javax.swing.JDialog {
 	}
 
 	private void initComponents() {
+  JButton btOk;
+  JButton btCancel;
+  JPanel pnButtons;
+  JLabel lbSpeed;
+  JLabel lbSlope;
+  JLabel lblHeartRate;
+
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditPoint.title"));
 		setAlwaysOnTop(true);
@@ -73,8 +77,9 @@ public class frmEditPoint extends javax.swing.JDialog {
 		setType(java.awt.Window.Type.UTILITY);
 
 		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
 			public void componentShown(java.awt.event.ComponentEvent evt) {
-				formComponentShown(evt);
+				formComponentShown();
 			}
 		});
 
@@ -104,6 +109,16 @@ public class frmEditPoint extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, tfSpeed, 1, 1, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// -- Heart Rate
+				lblHeartRate = new javax.swing.JLabel();
+				lblHeartRate.setText(bundle.getString("frmEditPoint.lbHeartRate.text") + " (bpm)");
+				Utils.addComponent(paneGlobal, lblHeartRate, 0, 2, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
+						GridBagConstraints.HORIZONTAL);
+
+				tfHeartRate = new JTextField();
+				Utils.addComponent(paneGlobal, tfHeartRate, 1, 2, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+						GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		// -- Create the panel for the bottom buttons ---------------------------
 		pnButtons = new javax.swing.JPanel();
 		pnButtons.setLayout(new FlowLayout());
@@ -112,11 +127,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		btCancel = new javax.swing.JButton();
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
-		btCancel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setVisible(false);
-			}
-		});
+		btCancel.addActionListener(actionEvent -> setVisible(false));
 
 		// ----------------------------------------------------------------------
 		btOk = new javax.swing.JButton();
@@ -124,11 +135,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
-		btOk.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				RequestToClose();
-			}
-		});
+		btOk.addActionListener(actionEvent -> RequestToClose());
 
 		// -- Add buttons to the buttons panel
 		pnButtons.add(btOk);
@@ -146,14 +153,17 @@ public class frmEditPoint extends javax.swing.JDialog {
 	}
 
 	public boolean showDialog(CgParam p) {
+
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
+		pulse = p.getPulse();
 
 		double speedToDisplay = Utils.SpeedMeterToCurrentUnits(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
 		tfSpeed.setText(String.valueOf(speedToDisplay));
+		tfHeartRate.setText(String.valueOf(pulse));
 		// End set field
 		ok = false;
 
@@ -166,6 +176,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 			double convertedInputSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
 			p.setSpeed(convertedInputSpeed);
+			p.setPulse(pulse);
 		}
 		return ok;
 	}
@@ -175,6 +186,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 	 *
 	 * @return
 	 */
+	@Override
 	protected JRootPane createRootPane() {
 		JRootPane rootPane = new JRootPane();
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
@@ -182,6 +194,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
@@ -189,6 +202,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
 			}
@@ -205,22 +219,31 @@ public class frmEditPoint extends javax.swing.JDialog {
 	}
 
 	private void RequestToClose() {
+
 		boolean param_valid = true;
 		// check that the parameters are ok
 
 		slope = Utils.ParseDoubleEx(tfSlope.getText(), -1000.0);
-		if ((slope >= -50) && (slope <= 50))
+		if ((slope >= -50) && (slope <= 50)) {
 			tfSlope.setBackground(Color.WHITE);
-		else {
+		} else {
 			tfSlope.setBackground(Color.MAGENTA);
 			param_valid = false;
 		}
 
 		speed = Utils.ParseDoubleEx(tfSpeed.getText(), -1000.0);
-		if ((speed > 0) && (speed < 100))
+		if ((speed > 0) && (speed < 100)) {
 			tfSpeed.setBackground(Color.WHITE);
-		else {
+		} else {
 			tfSpeed.setBackground(Color.MAGENTA);
+			param_valid = false;
+		}
+
+		pulse = Integer.valueOf(tfHeartRate.getText());
+		if ((pulse > 0) && (pulse < 300)) {
+			tfHeartRate.setBackground(Color.WHITE);
+		} else {
+			tfHeartRate.setBackground(Color.MAGENTA);
 			param_valid = false;
 		}
 
@@ -231,7 +254,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		}
 	}
 
-	private void formComponentShown(java.awt.event.ComponentEvent evt) {
+	private void formComponentShown() {
 		repaint();
 	}
 

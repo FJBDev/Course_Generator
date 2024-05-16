@@ -25,22 +25,26 @@ import course_generator.utils.Utils;
  * @author pierre.delore
  */
 public class CgParam implements Comparable<CgParam> {
+
+	private int Pulse;
 	private double Slope;
 	private String Speed;
 
-	public CgParam(double slope, String speed) {
+	public CgParam(double slope, String speed, int pulse) {
+		Pulse = pulse;
 		Slope = slope;
 		Speed = speed;
 	}
 
 	@Override
 	public int compareTo(CgParam p) {
-		if (Slope - p.Slope < 0)
+		if (Slope - p.Slope < 0) {
 			return -1;
-		else if (Slope - p.Slope > 0)
+		} else if (Slope - p.Slope > 0) {
 			return 1;
-		else
+		} else {
 			return 0;
+		}
 	}
 
 	public double getSlope() {
@@ -56,7 +60,7 @@ public class CgParam implements Comparable<CgParam> {
 	}
 
 	public double getSpeedNumber() {
-		double speed = 0.0;
+		double speed;
 
 		if (Speed.contains(":")) {
 			// if the speed is a pace, we need to convert it to a 'per hour' number
@@ -69,6 +73,14 @@ public class CgParam implements Comparable<CgParam> {
 
 	public void setSpeed(double speed) {
 		Speed = String.valueOf(speed);
+	}
+
+	public void setPulse(int pulse) {
+		Pulse = pulse;
+	}
+
+	public int getPulse() {
+		return Pulse;
 	}
 
 }

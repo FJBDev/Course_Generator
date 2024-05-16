@@ -22,11 +22,15 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
+import org.xml.sax.SAXException;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
@@ -39,34 +43,36 @@ import course_generator.utils.Utils;
 public class ParamData {
 	public String name = "";
 	public String comment = "";
-	public ArrayList<CgParam> data;
+	public List<CgParam> data;
 
 	public ParamData() {
-		data = new ArrayList<CgParam>();
+		data = new ArrayList<>();
 	}
 
 	/**
 	 * Load parameters from disk
-	 * 
+	 *
 	 * @param name File name to load
 	 * @throws Exception
 	 */
-	public void Load(String name) throws Exception {
+	public void Load(String name) throws SAXException, IOException, ParserConfigurationException {
 		SaxParamHandler paramHandler = new SaxParamHandler();
 
 		int ret = paramHandler.readDataFromParam(name, this);
-		if (ret != 0)
+		if (ret != 0) {
 			System.out.println("Load parameters '" + name + "'from disk. Error line =" + paramHandler.getErrLine());
+		}
 
 	} // -- Load
 
 	/**
 	 * Save parameters on disk
-	 * 
+	 *
 	 * @param fname Name of the file
 	 */
 	public void SaveCurve(String fname, int unit) {
-		if (data.size() <= 0) {
+
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -87,6 +93,7 @@ public class ParamData {
 				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.getSlope()));
 				// Saving the curve speeds using the metric system.
 				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.getSpeedNumber()));
+				Utils.WriteStringToXML(writer, "Pulse", String.format(Locale.ROOT, "%s", curvePoint.getPulse()));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -103,20 +110,23 @@ public class ParamData {
 
 	/**
 	 * Find the maximum speed of the list
-	 * 
+	 *
 	 * @return Maximum speed en km/h
 	 */
 	public double FindMaxSpeed() {
-		if (data.size() > 0) // Count
-		{
+
+		if (data.isEmpty()){ // Count
+			return 0;
+		}
+		else {
 			double max = -9999.0;
 			for (int j = 0; j <= data.size() - 1; j++) {
-				if (data.get(j).getSpeedNumber() > max)
+				if (data.get(j).getSpeedNumber() > max) {
 					max = data.get(j).getSpeedNumber();
+				}
 			}
 			return max;
-		} else
-			return 0;
+		}
 	}
 
 } // Class
